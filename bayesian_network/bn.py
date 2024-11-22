@@ -29,11 +29,19 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 variables = [
     RAINFALL_AMOUNT,
-    RAINFALL_FREQUENCY,
+    RAINFALL_INTENSITY,
+    TEMPERATURE,
+    LAND_USE,
+    SOIL_MOISTURE,
+    SOIL_TYPE,
+    RUNOFF_COEFFICIENT,
     ELEVATION,
     SLOPE,
     HAZARD,
-    AGRICULTURE_DENSITY,
+    RIVER_DISCHARGE,
+    RIVER_EXPOSURE,
+    STREET_DENSITY,
+    FOREST_DENSITY,
     VULNERABILITY,
     RIVER_DENSITY,
     EXPOSURE,
@@ -42,82 +50,88 @@ variables = [
 print(f"Variables: {'; '.join(variables)}")
 
 state_names_dictionary = {
-    RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'],  # -
-    RAINFALL_AMOUNT: ['Huge', 'Medium', 'Little'],  # -
+    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],  # -
+    RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],  # -
+    TEMPERATURE: ['High', 'Medium', 'Low'],
+    LAND_USE: ['Greenland, Farmland'],
+    SOIL_MOISTURE: ['High', 'Medium', 'Low'],
+    SOIL_TYPE: ['L', 'LT', 'sL', 'T'],
+    RUNOFF_COEFFICIENT: ['High', 'Medium', 'Low'],
     ELEVATION: ['High', 'Medium', 'Low'],  # -
-    SLOPE: ['Steep', 'Flat'],  # -
+    SLOPE: ['High', 'Moderate', 'Low'], # -
     HAZARD: ['High', 'Medium', 'Low'],  # -
-    AGRICULTURE_DENSITY: ['High', 'Medium', 'Low'],  # -
+    RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
+    RIVER_EXPOSURE: ['High', 'Medium', 'Low'],
+    RIVER_DENSITY: ['High', 'Medium', 'Low'],
+    STREET_DENSITY: ['High', 'Medium', 'Low'],
+    FOREST_DENSITY: ['High', 'Medium', 'Low'],
     VULNERABILITY: ['High', 'Medium', 'Low'],  # -
-    RIVER_DENSITY: ['Dense', 'Sparse'],  # -
     EXPOSURE: ['High', 'Medium', 'Low'],
     FLOOD_RISK: ['Yes', 'No']
 }
 
 evidence_dictionary = {
-    RAINFALL_FREQUENCY: None,
-    RAINFALL_AMOUNT: [RAINFALL_FREQUENCY],
+    RAINFALL_INTENSITY: None,
+    RAINFALL_AMOUNT: [RAINFALL_INTENSITY],
+    TEMPERATURE: None,
+    HAZARD: [RAINFALL_AMOUNT, TEMPERATURE],
+    LAND_USE: None,
+    SOIL_MOISTURE: None,
+    SOIL_TYPE: None,
+    RUNOFF_COEFFICIENT: [LAND_USE, SOIL_MOISTURE, SOIL_TYPE, SLOPE],
     ELEVATION: None,
-    SLOPE: [ELEVATION],
-    HAZARD: [RAINFALL_AMOUNT, SLOPE],
-    AGRICULTURE_DENSITY: None,
-    VULNERABILITY: [AGRICULTURE_DENSITY],
+    SLOPE: None,
+    VULNERABILITY: [RUNOFF_COEFFICIENT, ELEVATION, SLOPE],
     RIVER_DENSITY: None,
-    EXPOSURE: [RIVER_DENSITY],
+    RIVER_DISCHARGE: None,
+    RIVER_EXPOSURE: [RIVER_DISCHARGE, RIVER_DENSITY],
+    STREET_DENSITY: None,
+    FOREST_DENSITY: None,
+    EXPOSURE: [RIVER_EXPOSURE, STREET_DENSITY, FOREST_DENSITY],
     FLOOD_RISK: [HAZARD, VULNERABILITY, EXPOSURE]
 }
 
 edges = [
-    (RAINFALL_FREQUENCY, RAINFALL_AMOUNT),
-    (ELEVATION, SLOPE),
+    (RAINFALL_INTENSITY, RAINFALL_AMOUNT),
     (RAINFALL_AMOUNT, HAZARD),
-    (SLOPE, HAZARD),
-    (AGRICULTURE_DENSITY, VULNERABILITY),
-    (RIVER_DENSITY, EXPOSURE),
+    (TEMPERATURE, HAZARD),
+    (RAINFALL_AMOUNT, HAZARD),
+
+    (LAND_USE, RUNOFF_COEFFICIENT),
+    (SOIL_MOISTURE, RUNOFF_COEFFICIENT),
+    (SOIL_TYPE, RUNOFF_COEFFICIENT),
+    (SLOPE, RUNOFF_COEFFICIENT),
+
+    (RUNOFF_COEFFICIENT, VULNERABILITY),
+    (ELEVATION, VULNERABILITY),
+    (SLOPE, VULNERABILITY),
+
+    (RIVER_DISCHARGE, RIVER_EXPOSURE),
+    (RIVER_DENSITY, RIVER_EXPOSURE),
+
+    (RIVER_EXPOSURE, EXPOSURE),
+    (STREET_DENSITY, EXPOSURE),
+    (FOREST_DENSITY, EXPOSURE),
+
     (HAZARD, FLOOD_RISK),
     (VULNERABILITY, FLOOD_RISK),
     (EXPOSURE, FLOOD_RISK)
 ]
 
 values_dictionary = {
-    RAINFALL_FREQUENCY: [
-        [0.15],  # Frequent
-        [0.1],  # Medium
-        [0.75]  # Rare
-    ],
-    RAINFALL_AMOUNT: [
-        [0.7, 0.2, 0.1],
-        [0.2, 0.5, 0.3],
-        [0.1, 0.3, 0.6]
-    ],
-    ELEVATION: [
-        [0.15],
-        [0.1],
-        [0.75]
-    ],
-    SLOPE: [
-        [0.75, 0.6, 0.05],
-        [0.25, 0.4, 0.95]
-    ],
+
     HAZARD: [
-        [0.2, 0.7, 0.1, 0.5, 0.1, 0.1],
-        [0.2, 0.25, 0.3, 0.3, 0.3, 0.2],
-        [0.6, 0.05, 0.6, 0.2, 0.6, 0.7]
+        [0.6, 0.9, 0.8  , 0.3, 0.4, 0.3,  0.05, 0.1, 0.05],
+        [0.3, 0.1, 0.1  , 0.4, 0.4, 0.5,  0.15, 0.2, 0.15],
+        [0.1, 0.0, 0.1  , 0.3, 0.2, 0.2,  0.8, 0.7, 0.8]
     ],
-    AGRICULTURE_DENSITY: [
-        [0.3],
-        [0.6],
-        [0.1]
-    ],
+
     VULNERABILITY: [
-        [0.6, 0.3, 0.1],
-        [0.3, 0.5, 0.2],
-        [0.1, 0.2, 0.7]
+        [0.1, 0.15],
+        [],
+        []
     ],
-    RIVER_DENSITY: [
-        [0.6],
-        [0.4]
-    ],
+
     EXPOSURE: [
         [0.7, 0.05],
         [0.2, 0.25],
