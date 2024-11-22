@@ -1,72 +1,41 @@
 import pandas as pd
 
 
-def add_classification_to_csv(input_csv_path, column_name, low_threshold=None, high_threshold=None,
-                              use_percentile=False):
+
+def classify_category(data, column='temperature', low_threshold=10.0, high_treshold=21.0):
     """
-    Fügt einer CSV-Datei eine Klassifikationsspalte hinzu und speichert sie neu.
+    Klassifiziert die tägliche Regenmenge in High, Medium und Low basierend auf den Schwellenwerten.
 
-    Args:
-        input_csv_path (str): Pfad zur Eingabe-CSV-Datei.
-        column_name (str): Name der zu klassifizierenden Spalte.
-        low_threshold (float): Schwellenwert für "Low" (nicht benötigt, wenn use_percentile=True).
-        high_threshold (float): Schwellenwert für "High" (nicht benötigt, wenn use_percentile=True).
-        use_percentile (bool): Ob Perzentile zur Klassifikation genutzt werden sollen.
+    :param data: DataFrame mit einer Spalte für Regenmenge
+    :param column: Name der Spalte mit den täglichen Regenwerten
+    :param low_threshold: Obergrenze für die Klassifikation 'Low'
+    :param high_treshold: Obergrenze für die Klassifikation 'Medium'
+    :return: DataFrame mit einer zusätzlichen Spalte 'rainfall_class'
     """
-    data = pd.read_csv(input_csv_path)
 
-    # Überprüfen, ob die Spalte existiert
-    if column_name not in data.columns:
-        raise ValueError(f"Column '{column_name}' not found in the dataset.")
-
-    # Konvertiere die Zielspalte zu numerischen Werten (nicht konvertierbare Werte werden NaN)
-    data[column_name] = pd.to_numeric(data[column_name], errors='coerce')
-
-    # Falls Perzentile genutzt werden, Schwellenwerte berechnen
-    if use_percentile:
-        low_threshold = data[column_name].quantile(0.33)
-        high_threshold = data[column_name].quantile(0.67)
-
-    # Überprüfen, ob Schwellenwerte gültig sind
-    if low_threshold is None or high_threshold is None:
-        raise ValueError("Thresholds must be defined or calculated.")
-
-    # Klassifikationslogik
-    def classify(value):
-        if pd.isna(value):  # NaN-Werte behandeln
-            return "NaN"
-        elif value < low_threshold:
-            return "Low"
-        elif value > high_threshold:
+    def classify(rainfall):
+        if rainfall > high_treshold:
             return "High"
-        else:
+        elif rainfall > low_threshold:
             return "Medium"
+        else:
+            return "Low"
 
-    # Spalte hinzufügen
-    data[f"{column_name}_class"] = data[column_name].apply(classify)
+    # Anwenden der Klassifikationslogik
+    if column not in data.columns:
+        raise ValueError(f"Die Spalte '{column}' wurde im DataFrame nicht gefunden.")
 
-    # Speichere die aktualisierte CSV-Datei
-    output_csv_path = input_csv_path.replace(".csv", "_classified.csv")
-    data.to_csv(output_csv_path, index=False)
-    print(f"Updated CSV saved with classification to: {output_csv_path}")
-    return output_csv_path
+    data['temperature_class'] = data[column].apply(classify)
+    return data
 
 
-# Spezifische Klassifikationsregeln für jede Datei
-files_classification_rules = [
-    # Fixed thresholds
-    ("/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/rain_sum.csv", "rainfall_amount", "fixed", 10, 50),
-    ("/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/rain_intensity.csv", "rain_intensity", "fixed", 2, 8),
-    ("/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/river_discharge.csv", "river_discharge", "fixed", 100, 300),
+# Datei laden
+data = pd.read_csv(
+    '/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/temperature.csv')
 
-    # Percentile-based classification
-    ("/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/soil_moisture.csv", "soil_moisture", "percentile", 0.2, 0.4),
-    ("/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/temperature.csv", "temperature", "percentile", 10, 21)
-]
-output_paths = []
-for input_csv, column, low, high, use_percentile in files_classification_rules:
-    try:
-        output_path = add_classification_to_csv(input_csv, column, low, high, use_percentile)
-        output_paths.append(output_path)
-    except ValueError as e:
-        print(f"Error processing {input_csv}: {e}")
+# Klassifikation anwenden
+classified_rainfall_data = classify_category(data, column='temperature')
+
+classified_rainfall_data.to_csv('/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/temperature_classified.csv')
+
+classified_rainfall_data.head()  # Zeigt die ersten Zeilen zur Überprüfung
