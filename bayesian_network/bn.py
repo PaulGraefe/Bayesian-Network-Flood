@@ -1,6 +1,8 @@
 from readline import redisplay
 import warnings
 
+from pgmpy.estimators import MaximumLikelihoodEstimator
+
 # Suppress pgmpy internal deprecated use of third party libraries.
 warnings.simplefilter(action='ignore', category=FutureWarning)
 # Suppress UserWarning related to machine precision calculations of percentage.
@@ -118,6 +120,16 @@ edges = [
     (EXPOSURE, FLOOD_RISK)
 ]
 
+data = pd.read_csv('/Users/paulgraefe/PycharmProjects/scientificProject/data/open-meteo-data/consolidated_with_scenarios.csv')
+data = data.drop(columns=['DATE'])
+print("Spalten in der CSV:", data.columns)
+
+model = ExtendedBayesianNetwork(edges)
+model.fit(data, estimator=MaximumLikelihoodEstimator)
+print(state_names_dictionary['RAINFALL_AMOUNT'])
+
+manual_variables = [HAZARD, VULNERABILITY, RIVER_EXPOSURE, EXPOSURE, FLOOD_RISK]
+
 values_dictionary = {
 
     HAZARD: [
@@ -133,15 +145,15 @@ values_dictionary = {
     ],
 
     RIVER_EXPOSURE: [
-        [0.1, 0.3, 0.9,   0.05, 0.2, 0.45,  0.01, 0.1, 0.2],
+        [0.1, 0.4, 0.9,   0.05, 0.2, 0.45,  0.01, 0.1, 0.2],
         [0.2, 0.4, 0.09,  0.35, 0.4, 0.35,  0.09, 0.3, 0.45],
-        [0.7, 0.2, 0.01,  0.6, 0.4, 0.15,   0.9, 0.6, 0.35]
+        [0.7, 0.2, 0.01,  0.6, 0.4, 0.2,    0.9, 0.6, 0.35]
     ],
 
     EXPOSURE: [
-        [0.5, 0.6, 0.9,   0.4, 0.5, 0.5,   0.35, 0.4, 0.45,  0.5, 0.45, 0.6,  0.3, 0.35, 0.45,  0.4, 0.45, 0.5,   0.35, 0.375, 0.425,  0.275, 0.35, 0.4,   0.01, 0.2, 0.3],
+        [0.5, 0.6, 0.9,   0.4, 0.45, 0.5,   0.35, 0.4, 0.45,  0.5, 0.45, 0.6,  0.3, 0.35, 0.45,  0.4, 0.45, 0.5,   0.35, 0.375, 0.425,  0.275, 0.35, 0.4,   0.01, 0.2, 0.3],
         [0.4, 0.3, 0.09,  0.4, 0.4, 0.4,   0.3, 0.3, 0.4,    0.4, 0.4, 0.3,   0.5, 0.4, 0.4,    0.45, 0.4, 0.4,   0.35, 0.325, 0.3,    0.35, 0.325, 0.3,   0.09, 0.2, 0.2],
-        [0.1, 0.1, 0.01,  0.1, 0.15, 0.1,  0.35, 0.3, 0.15,  0.1, 0.15, 0.1,  0.2, 0.25, 0.15,  0.15, 0.15, 0.1,  0.3, 0.3, 0.275,     0.375, 0.325, 0.3,  0.9, 0.6, 0.5]
+        [0.1, 0.1, 0.01,  0.2, 0.15, 0.1,  0.35, 0.3, 0.15,  0.1, 0.15, 0.1,  0.2, 0.25, 0.15,  0.15, 0.15, 0.1,  0.3, 0.3, 0.275,     0.375, 0.325, 0.3,  0.9, 0.6, 0.5]
     ],
 
     FLOOD_RISK: [
@@ -150,14 +162,14 @@ values_dictionary = {
     ],
 }
 
-cpds = {v: get_tabular_cpd(v, state_names_dictionary, values_dictionary, evidence_dictionary) for v in variables}
+cpds = {v: get_tabular_cpd(v, state_names_dictionary, values_dictionary, evidence_dictionary) for v in manual_variables}
 
 for k, v in cpds.items():
     print('CPD Table for variable: {}'.format(k))
     # redisplay(cpd_to_pandas(v))
     print()
 
-model = ExtendedBayesianNetwork(edges)
+
 model.add_cpds(*[cpds[k] for k in cpds])
 print('The model has been correctly developed: {}.'.format(model.check_model()))
 

@@ -10,27 +10,27 @@ df_weather['DATE'] = pd.to_datetime(df_weather['DATE'])  # Ersetze 'DATE' mit de
 # 2. Definiere die Szenarien mit festen Werten
 scenarios = [
     {'LAND_USE': 'Grassland', 'SOIL_TYPE': 'T', 'ELEVATION': 'High', 'SLOPE': 'Steep', 'RUNOFF_COEFFICIENT': 'High',
-     'RIVER_DENSITY': 'Low', 'FOREST_DENSITY': 'High', 'PROXIMITY_TO_WATER': 'Low', 'FLOOD_RISK': 'Low',
+     'PROXIMITY_TO_RIVER': 'Low', 'FOREST_DENSITY': 'High', 'STREET_DENSITY': 'Low', 'FLOOD_RISK': 'Low',
      'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
     {'LAND_USE': 'Grassland', 'SOIL_TYPE': 'L', 'ELEVATION': 'High', 'SLOPE': 'Steep', 'RUNOFF_COEFFICIENT': 'Medium',
-     'RIVER_DENSITY': 'Low', 'FOREST_DENSITY': 'High', 'PROXIMITY_TO_WATER': 'High', 'FLOOD_RISK': 'Low',
+     'PROXIMITY_TO_RIVER': 'High', 'FOREST_DENSITY': 'High', 'STREET_DENSITY': 'Low', 'FLOOD_RISK': 'Low',
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
     {'LAND_USE': 'Farmland', 'SOIL_TYPE': 'LT', 'ELEVATION': 'Medium', 'SLOPE': 'Moderate', 'RUNOFF_COEFFICIENT': 'High',
-     'RIVER_DENSITY': 'Low', 'FOREST_DENSITY': 'Low', 'PROXIMITY_TO_WATER': 'High', 'FLOOD_RISK': 'Medium',
+     'PROXIMITY_TO_RIVER': 'High', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'Low', 'FLOOD_RISK': 'Medium',
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
     {'LAND_USE': 'Grassland', 'SOIL_TYPE': 'T', 'ELEVATION': 'Medium', 'SLOPE': 'Moderate', 'RUNOFF_COEFFICIENT': 'Medium',
-     'RIVER_DENSITY': 'Low', 'FOREST_DENSITY': 'Low', 'PROXIMITY_TO_WATER': 'Low', 'FLOOD_RISK': 'Medium',
+     'PROXIMITY_TO_RIVER': 'Low', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'Medium', 'FLOOD_RISK': 'Medium',
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
-    {'LAND_USE': 'Farmland', 'SOIL_TYPE': 'L', 'ELEVATION': 'Low', 'SLOPE': 'Flat', 'RUNOFF_COEFFICIENT': 'Medium',
-     'RIVER_DENSITY': 'High', 'FOREST_DENSITY': 'Low', 'PROXIMITY_TO_WATER': 'Low', 'FLOOD_RISK': 'High',
+    {'LAND_USE': 'Farmland', 'SOIL_TYPE': 'sL', 'ELEVATION': 'Low', 'SLOPE': 'Flat', 'RUNOFF_COEFFICIENT': 'Medium',
+     'PROXIMITY_TO_RIVER': 'Low', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'High', 'FLOOD_RISK': 'High',
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
-    {'LAND_USE': 'Farmland', 'SOIL_TYPE': 'sL', 'ELEVATION': 'Low', 'SLOPE': 'Flat', 'RUNOFF_COEFFICIENT': 'Low',
-     'RIVER_DENSITY': 'High', 'FOREST_DENSITY': 'Low', 'PROXIMITY_TO_WATER': 'Low', 'FLOOD_RISK': 'High',
+    {'LAND_USE': 'Grassland', 'SOIL_TYPE': 'T', 'ELEVATION': 'Low', 'SLOPE': 'Flat', 'RUNOFF_COEFFICIENT': 'Low',
+     'PROXIMITY_TO_RIVER': 'High', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'Medium', 'FLOOD_RISK': 'High',
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 ]
 
