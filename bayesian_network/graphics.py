@@ -9,7 +9,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 __node_positions = {
-    PER_UNIT_GDP: (10, 12), ELEVATION: (22, 12), RAINFALL_FREQUENCY: (30, 12), RIVER_DENSITY: (42, 12),
+    PER_UNIT_GDP: (10, 12), ELEVATION: (22, 12), RAINFALL_FREQUENCY: (30, 12), PROXIMITY_TO_RIVER: (42, 12),
     POPULATION_DENSITY: (2, 9),
     ROAD_DENSITY: (10, 6), SLOPE: (22, 6), RAINFALL_AMOUNT: (34, 6),
     FLOOD: (22, 0)

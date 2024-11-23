@@ -43,7 +43,7 @@ variables = [
     STREET_DENSITY,
     FOREST_DENSITY,
     VULNERABILITY,
-    RIVER_DENSITY,
+    PROXIMITY_TO_RIVER,
     EXPOSURE,
     FLOOD_RISK
 ]
@@ -62,7 +62,7 @@ state_names_dictionary = {
     HAZARD: ['High', 'Medium', 'Low'],  # -
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
     RIVER_EXPOSURE: ['High', 'Medium', 'Low'],
-    RIVER_DENSITY: ['High', 'Medium', 'Low'],
+    PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
     FOREST_DENSITY: ['High', 'Medium', 'Low'],
     VULNERABILITY: ['High', 'Medium', 'Low'],  # -
@@ -82,9 +82,9 @@ evidence_dictionary = {
     ELEVATION: None,
     SLOPE: None,
     VULNERABILITY: [RUNOFF_COEFFICIENT, ELEVATION, SLOPE],
-    RIVER_DENSITY: None,
+    PROXIMITY_TO_RIVER: None,
     RIVER_DISCHARGE: None,
-    RIVER_EXPOSURE: [RIVER_DISCHARGE, RIVER_DENSITY],
+    RIVER_EXPOSURE: [RIVER_DISCHARGE, PROXIMITY_TO_RIVER],
     STREET_DENSITY: None,
     FOREST_DENSITY: None,
     EXPOSURE: [RIVER_EXPOSURE, STREET_DENSITY, FOREST_DENSITY],
@@ -107,7 +107,7 @@ edges = [
     (SLOPE, VULNERABILITY),
 
     (RIVER_DISCHARGE, RIVER_EXPOSURE),
-    (RIVER_DENSITY, RIVER_EXPOSURE),
+    (PROXIMITY_TO_RIVER, RIVER_EXPOSURE),
 
     (RIVER_EXPOSURE, EXPOSURE),
     (STREET_DENSITY, EXPOSURE),
@@ -127,22 +127,26 @@ values_dictionary = {
     ],
 
     VULNERABILITY: [
-        [0.1, 0.15],
-        [],
-        []
+        [0.1, 0.15, 0.3,  0.1, 0.3, 0.5,  0.2, 0.4, 0.75,  0.15, 0.25, 0.4,   0.2, 0.35, 0.5,   0.3, 0.4, 0.6,   0.01, 0.05, 0.2,  0.05, 0.2, 0.3,   0.1, 0.25, 0.4],
+        [0.2, 0.25, 0.3,  0.2, 0.5, 0.4,  0.3, 0.45, 0.2,  0.25, 0.35, 0.45,  0.35, 0.45, 0.4,  0.4, 0.5, 0.25,  0.09, 0.15, 0.3,  0.15, 0.35, 0.4,  0.2, 0.35, 0.4],
+        [0.7, 0.6, 0.4,   0.7, 0.2, 0.1,  0.5, 0.15, 0.05, 0.6, 0.4, 0.15,    0.45, 0.2, 0.1,   0.3, 0.1, 0.15,  0.9, 0.8, 0.5,    0.8, 0.45, 0.3,   0.7, 0.4, 0.2]
+    ],
+
+    RIVER_EXPOSURE: [
+        [0.1, 0.3, 0.9,   0.05, 0.2, 0.45,  0.01, 0.1, 0.2],
+        [0.2, 0.4, 0.09,  0.35, 0.4, 0.35,  0.09, 0.3, 0.45],
+        [0.7, 0.2, 0.01,  0.6, 0.4, 0.15,   0.9, 0.6, 0.35]
     ],
 
     EXPOSURE: [
-        [0.7, 0.05],
-        [0.2, 0.25],
-        [0.1, 0.7]
+        [0.5, 0.6, 0.9,   0.4, 0.5, 0.5,   0.35, 0.4, 0.45,  0.5, 0.45, 0.6,  0.3, 0.35, 0.45,  0.4, 0.45, 0.5,   0.35, 0.375, 0.425,  0.275, 0.35, 0.4,   0.01, 0.2, 0.3],
+        [0.4, 0.3, 0.09,  0.4, 0.4, 0.4,   0.3, 0.3, 0.4,    0.4, 0.4, 0.3,   0.5, 0.4, 0.4,    0.45, 0.4, 0.4,   0.35, 0.325, 0.3,    0.35, 0.325, 0.3,   0.09, 0.2, 0.2],
+        [0.1, 0.1, 0.01,  0.1, 0.15, 0.1,  0.35, 0.3, 0.15,  0.1, 0.15, 0.1,  0.2, 0.25, 0.15,  0.15, 0.15, 0.1,  0.3, 0.3, 0.275,     0.375, 0.325, 0.3,  0.9, 0.6, 0.5]
     ],
 
     FLOOD_RISK: [
-        [0.9, 0.8, 0.7, 0.85, 0.75, 0.65, 0.6, 0.55, 0.5, 0.8, 0.7, 0.6, 0.65, 0.55, 0.45, 0.5, 0.4, 0.3, 0.4, 0.3, 0.2,
-         0.15, 0.1, 0.05, 0.1, 0.05, 0.01],
-        [0.1, 0.2, 0.3, 0.15, 0.25, 0.35, 0.4, 0.45, 0.5, 0.2, 0.3, 0.4, 0.35, 0.45, 0.55, 0.5, 0.6, 0.7, 0.6, 0.7, 0.8,
-         0.85, 0.9, 0.95, 0.9, 0.95, 0.99]
+        [0.9, 0.8, 0.7, 0.85, 0.75, 0.65, 0.6, 0.55, 0.5, 0.8, 0.7, 0.6, 0.65, 0.55, 0.45, 0.5, 0.4, 0.3, 0.4, 0.3, 0.2, 0.15, 0.1, 0.05, 0.1, 0.05, 0.01],
+        [0.1, 0.2, 0.3, 0.15, 0.25, 0.35, 0.4, 0.45, 0.5, 0.2, 0.3, 0.4, 0.35, 0.45, 0.55, 0.5, 0.6, 0.7, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 0.9, 0.95, 0.99]
     ],
 }
 
@@ -163,20 +167,6 @@ exact_infer = VariableElimination(model)
 
 print_exact_inference(FLOOD_RISK, exact_infer)
 
-# worst case
-print_exact_inference(FLOOD_RISK, exact_infer,
-                      evidence={RAINFALL_FREQUENCY: 'Frequent', RAINFALL_AMOUNT: 'Huge', ELEVATION: 'High',
-                                SLOPE: 'Flat', HAZARD: 'High', AGRICULTURE_DENSITY: 'High', VULNERABILITY: 'High',
-                                RIVER_DENSITY: 'Dense', EXPOSURE: 'High'
-                                })
-
-# random case
-print_exact_inference(FLOOD_RISK, exact_infer, evidence={RAINFALL_FREQUENCY: 'Medium',
-                                                         ELEVATION: 'High',
-                                                         SLOPE: 'Steep',
-                                                         AGRICULTURE_DENSITY: 'High',
-                                                         RIVER_DENSITY: 'Dense',
-                                                         })
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-
