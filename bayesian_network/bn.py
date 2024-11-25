@@ -31,10 +31,10 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 variables = [
     RAINFALL_AMOUNT,
-    #RAINFALL_INTENSITY,
+    RAINFALL_INTENSITY,
     TEMPERATURE,
     LAND_USE,
-    #SOIL_MOISTURE,
+    SOIL_MOISTURE,
     SOIL_TYPE,
     RUNOFF_COEFFICIENT,
     ELEVATION,
@@ -52,7 +52,7 @@ variables = [
 print(f"Variables: {'; '.join(variables)}")
 
 state_names_dictionary = {
-    # RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],  # -
+    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],  # -
     RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],  # -
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
@@ -73,8 +73,8 @@ state_names_dictionary = {
 }
 
 evidence_dictionary = {
-    #RAINFALL_INTENSITY: None,
-    RAINFALL_AMOUNT: None,
+    RAINFALL_INTENSITY: None,
+    RAINFALL_AMOUNT: [RAINFALL_INTENSITY],
     TEMPERATURE: None,
     HAZARD: [RAINFALL_AMOUNT, TEMPERATURE],
     LAND_USE: None,
@@ -94,7 +94,7 @@ evidence_dictionary = {
 }
 
 edges = [
-    #(RAINFALL_INTENSITY, RAINFALL_AMOUNT),
+    (RAINFALL_INTENSITY, RAINFALL_AMOUNT),
     (RAINFALL_AMOUNT, HAZARD),
     (TEMPERATURE, HAZARD),
     (RAINFALL_AMOUNT, HAZARD),
@@ -122,16 +122,22 @@ edges = [
 
 
 values_dictionary = {
+    RAINFALL_INTENSITY: [
+        [1 / 365],
+        [6 / 365],
+        [358 / 365]
+    ],
+
     RAINFALL_AMOUNT: [
-        [0.15],
-        [0.3],
-        [0.55]
+        [0.9, 0.5, 0.01],
+        [0.09, 0.3, 0.09],
+        [0.01, 0.2, 0.9]
     ],
 
     TEMPERATURE: [
-        [0.2],
-        [0.5],
-        [0.3]
+        [35 / 365],
+        [174 / 365],
+        [156 / 365]
     ],
 
     LAND_USE: [
@@ -140,11 +146,10 @@ values_dictionary = {
     ],
 
     SOIL_MOISTURE: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [121 / 365],
+        [124 / 365],
+        [120 / 365]
     ],
-
 
     SOIL_TYPE: [
         [1 / 6],
@@ -154,27 +159,27 @@ values_dictionary = {
     ],
 
     ELEVATION: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [1 / 3],
+        [1 / 3],
+        [1 / 3]
     ],
 
     SLOPE: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [1 / 3],
+        [1 / 3],
+        [1 / 3]
     ],
 
     STREET_DENSITY: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [1 / 6],
+        [1 / 3],
+        [1 / 2]
     ],
 
     FOREST_DENSITY: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [3 / 6],
+        [1 / 6],
+        [2 / 6]
     ],
 
     RUNOFF_COEFFICIENT: [
@@ -184,15 +189,15 @@ values_dictionary = {
     ],
 
     RIVER_DISCHARGE: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [72 / 365],
+        [187 / 365],
+        [106 / 365]
     ],
 
     PROXIMITY_TO_RIVER: [
-        [0.3],
-        [0.4],
-        [0.3]
+        [2 / 6],
+        [1 / 6],
+        [3 / 6]
     ],
 
     HAZARD: [
@@ -249,6 +254,58 @@ model.add_cpds(*[cpds[k] for k in cpds])
 exact_infer = VariableElimination(model)
 
 print_exact_inference(FLOOD_RISK, exact_infer)
+
+evidence = {
+
+    'RAINFALL_INTENSITY': 'High',
+    'TEMPERATURE': 'Medium',
+    'SOIL_MOISTURE':  'High',
+    'RIVER_DISCHARGE': 'High',
+    'LAND_USE': 'Greenland',
+    'SOIL_TYPE': 'T',
+    'ELEVATION': 'Low',
+    'SLOPE': 'Low',
+    'PROXIMITY_TO_RIVER': 'Low',
+    'FOREST_DENSITY': 'Low',
+    'STREET_DENSITY': 'High'
+}
+
+evidence2 = {
+
+    'RAINFALL_INTENSITY': 'High',
+    'TEMPERATURE': 'High',
+    'SOIL_MOISTURE':  'Low',
+    'RIVER_DISCHARGE': 'Low',
+    'LAND_USE': 'Greenland',
+    'SOIL_TYPE': 'L',
+    'ELEVATION': 'High',
+    'SLOPE': 'High',
+    'PROXIMITY_TO_RIVER': 'High',
+    'FOREST_DENSITY': 'High',
+    'STREET_DENSITY': 'Low'
+}
+
+scenarioHigh = {
+
+    'RAINFALL_INTENSITY': 'High',
+    'TEMPERATURE': 'Medium',
+    'SOIL_MOISTURE':  'High',
+    'RIVER_DISCHARGE': 'High',
+    'LAND_USE': 'Farmland',
+    'SOIL_TYPE': 'T',
+    'ELEVATION': 'Low',
+    'SLOPE': 'Low',
+    'PROXIMITY_TO_RIVER': 'Low',
+    'FOREST_DENSITY': 'Medium',
+    'STREET_DENSITY': 'Medium'
+}
+
+
+# Zielvariable
+target_variable = 'FLOOD_RISK'
+
+# Inferenz ausführen
+print_exact_inference(target_variable, exact_infer, evidence2)
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-

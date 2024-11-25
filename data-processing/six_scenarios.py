@@ -18,7 +18,7 @@ scenarios = [
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
     {'LAND_USE': 'Farmland', 'SOIL_TYPE': 'LT', 'ELEVATION': 'Medium', 'SLOPE': 'Moderate', 'RUNOFF_COEFFICIENT': 'High',
-     'PROXIMITY_TO_RIVER': 'High', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'Low', 'FLOOD_RISK': 'Medium',
+     'PROXIMITY_TO_RIVER': 'Medium', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'Low', 'FLOOD_RISK': 'Medium',
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
     {'LAND_USE': 'Grassland', 'SOIL_TYPE': 'T', 'ELEVATION': 'Medium', 'SLOPE': 'Moderate', 'RUNOFF_COEFFICIENT': 'Medium',
@@ -30,8 +30,7 @@ scenarios = [
     'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
 
     {'LAND_USE': 'Grassland', 'SOIL_TYPE': 'T', 'ELEVATION': 'Low', 'SLOPE': 'Flat', 'RUNOFF_COEFFICIENT': 'Low',
-     'PROXIMITY_TO_RIVER': 'High', 'FOREST_DENSITY': 'Low', 'STREET_DENSITY': 'Medium', 'FLOOD_RISK': 'High',
-    'RIVER_EXPOSURE': 'Low', 'EXPOSURE': 'Low', 'HAZARD': 'Low', 'VULNERABILITY': 'Low'},
+     'PROXIMITY_TO_RIVER': 'High', 'FOREST_DENSITY': 'Medium', 'STREET_DENSITY': 'Medium'},
 ]
 
 # 3. Erstelle ein leeres DataFrame für die konsolidierten Daten
