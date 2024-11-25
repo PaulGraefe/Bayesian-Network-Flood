@@ -56,7 +56,7 @@ state_names_dictionary = {
     RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],  # -
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
-    #SOIL_MOISTURE: ['High', 'Medium', 'Low'],
+    SOIL_MOISTURE: ['High', 'Medium', 'Low'],
     SOIL_TYPE: ['L', 'LT', 'sL', 'T'],
     RUNOFF_COEFFICIENT: ['High', 'Medium', 'Low'],
     ELEVATION: ['High', 'Medium', 'Low'],  # -
@@ -78,9 +78,9 @@ evidence_dictionary = {
     TEMPERATURE: None,
     HAZARD: [RAINFALL_AMOUNT, TEMPERATURE],
     LAND_USE: None,
-    #SOIL_MOISTURE: None,
+    SOIL_MOISTURE: None,
     SOIL_TYPE: None,
-    RUNOFF_COEFFICIENT: [LAND_USE, SOIL_TYPE],
+    RUNOFF_COEFFICIENT: [LAND_USE, SOIL_MOISTURE, SOIL_TYPE],
     ELEVATION: None,
     SLOPE: None,
     VULNERABILITY: [RUNOFF_COEFFICIENT, ELEVATION, SLOPE],
@@ -100,9 +100,9 @@ edges = [
     (RAINFALL_AMOUNT, HAZARD),
 
     (LAND_USE, RUNOFF_COEFFICIENT),
-    #(SOIL_MOISTURE, RUNOFF_COEFFICIENT),
+    (SOIL_MOISTURE, RUNOFF_COEFFICIENT),
     (SOIL_TYPE, RUNOFF_COEFFICIENT),
-    #(SLOPE, RUNOFF_COEFFICIENT),
+
 
     (RUNOFF_COEFFICIENT, VULNERABILITY),
     (ELEVATION, VULNERABILITY),
@@ -120,7 +120,6 @@ edges = [
     (EXPOSURE, FLOOD_RISK)
 ]
 
-manual_variables = [RAINFALL_AMOUNT, TEMPERATURE, HAZARD, VULNERABILITY, RIVER_EXPOSURE, EXPOSURE, FLOOD_RISK]
 
 values_dictionary = {
     RAINFALL_AMOUNT: [
@@ -145,6 +144,7 @@ values_dictionary = {
         [0.4],
         [0.3]
     ],
+
 
     SOIL_TYPE: [
         [1 / 6],
@@ -178,9 +178,9 @@ values_dictionary = {
     ],
 
     RUNOFF_COEFFICIENT: [
-        [0.6, 0.9, 0.8, 0.3, 0.3, 0.4, 0.3, 0.3],
-        [0.3, 0.1, 0.1, 0.4, 0.4, 0.4, 0.5, 0.3],
-        [0.1, 0.0, 0.1, 0.3, 0.3, 0.2, 0.2, 0.4]
+        [0.75, 0.65, 0.4, 0.9,   0.6, 0.65, 0.35, 0.7,  0.5, 0.55, 0.3, 0.7,  0.8, 0.85, 0.7, 0.9,    0.65, 0.7, 0.55, 0.75,    0.45, 0.5, 0.35, 0.55],
+        [0.15, 0.25, 0.4, 0.09,  0.3, 0.25, 0.35, 0.2,  0.4, 0.35, 0.4, 0.2,  0.15, 0.1, 0.2, 0.09,   0.25, 0.25, 0.35, 0.125,  0.25, 0.3, 0.3, 0.25],
+        [0.1, 0.1, 0.2, 0.01,    0.1, 0.1, 0.3, 0.1,    0.1, 0.1, 0.3, 0.1,   0.05, 0.05, 0.1, 0.01,  0.1, 0.05, 0.1, 0.125,    0.3, 0.2, 0.35, 0.2]
     ],
 
     RIVER_DISCHARGE: [
