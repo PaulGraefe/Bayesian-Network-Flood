@@ -12,7 +12,8 @@ warnings.simplefilter(action='ignore', category=UserWarning)
 from utils import *
 from variables import *
 from extended_classes import *
-# from graphics import *
+from pgmpy.utils import get_example_model
+
 
 # Import pgmpy modules.
 from pgmpy.factors.discrete.CPD import TabularCPD
@@ -238,6 +239,9 @@ values_dictionary = {
     ],
 }
 
+
+
+
 cpds = {v: get_tabular_cpd(v, state_names_dictionary, values_dictionary, evidence_dictionary) for v in variables}
 
 for k, v in cpds.items():
@@ -287,17 +291,17 @@ evidence2 = {
 
 scenarioHigh = {
 
-    'RAINFALL_INTENSITY': 'High',
+    'RAINFALL_INTENSITY': 'Medium',
     'TEMPERATURE': 'Medium',
     'SOIL_MOISTURE':  'High',
     'RIVER_DISCHARGE': 'High',
     'LAND_USE': 'Farmland',
-    'SOIL_TYPE': 'T',
+    'SOIL_TYPE': 'LT',
     'ELEVATION': 'Low',
     'SLOPE': 'Low',
-    'PROXIMITY_TO_RIVER': 'Low',
-    'FOREST_DENSITY': 'Medium',
-    'STREET_DENSITY': 'Medium'
+    'PROXIMITY_TO_RIVER': 'High',
+    'FOREST_DENSITY': 'Low',
+    'STREET_DENSITY': 'High'
 }
 
 
@@ -305,7 +309,7 @@ scenarioHigh = {
 target_variable = 'FLOOD_RISK'
 
 # Inferenz ausführen
-print_exact_inference(target_variable, exact_infer, evidence2)
+print_exact_inference(target_variable, exact_infer, evidence)
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-

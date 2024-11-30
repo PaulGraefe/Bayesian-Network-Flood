@@ -1,15 +1,5 @@
-scenario 1: niedriges Risiko pt2:
 
-LAND_USE: Grassland
-SOIL_TYPE: T
-ELEVATION: 333,7
-SLOPE: 20,05
-RUNOFF_COEFFICIENT: 0,5
-PROXIMITY_TO_WATER: 20
-FOREST_DENSITY: 0,557
-STREET_DENSITY: 0,044
-
-scenario 2: niedriges Risiko :
+scenario 1: niedriges Risiko :
 
 LAND_USE: Grassland
 SOIL_TYPE: L
@@ -20,29 +10,19 @@ PROXIMITY_TO_WATER: 430
 FOREST_Proximity: 20
 STREET_DENSITY: 0,047
 
-scenario 3: mittleres Risiko:
 
-LAND_USE: Farmland
-SOIL_TYPE: LT
-ELEVATION: 304,6
-SLOPE: 5,3
-RUNOFF_COEFFICIENT: 0,6
-PROXIMITY_TO_WATER: 188
-FOREST_DENSITY: 0,022
-STREET_DENSITY: 0,023
-
-scenario 4: mittleres Risiko pt2:
+scenario 2: mittleres Risiko:
 
 LAND_USE: Grassland
 SOIL_TYPE: T
 ELEVATION: 284,9
 SLOPE: 4,6
 RUNOFF_COEFFICIENT: 0,45
-PROXIMITY_TO_WATER: 10
-FOREST_DENSITY: 0
+PROXIMITY_TO_WATER: 350
+FOREST_PROXIMITY: 150
 STREET_DENSITY: 0,052
 
-scenario 5: hohes Risiko pt.3:
+scenario 3: hohes Risiko:
 
 LAND_USE: Farmland
 SOIL_TYPE: sL
@@ -50,8 +30,13 @@ ELEVATION: 269,7
 SLOPE: 2,4
 RUNOFF_COEFFICIENT: 0,4
 PROXIMITY_TO_WATER: 34
-FOREST_DENSITY: 0
+FOREST_DENSITY: 260
 STREET_DENSITY: 0,068
+
+
+
+
+
 
 scenario 6: hohes Risiko pt.4:
 
