@@ -9,6 +9,38 @@ from pgmpy.inference.ExactInference import VariableElimination
 from extended_classes import ExtendedApproxInference
 
 
+def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze):
+    results = []
+
+    # Iteriere über jede Variable, die analysiert werden soll
+    for variable in variables_to_analyze:
+        original_value = evidence.get(variable)
+        print(f"Sensitivitätsanalyse für Variable: {variable}")
+
+        # Iteriere über alle möglichen Werte der Variable
+        for state in inference.state_names[variable]:
+            # Setze den neuen Zustand
+            evidence[variable] = state
+
+            # Führe Inferenz durch
+            prob_dist = inference.query([target_variable], evidence=evidence)
+
+            # Ergebnisse speichern
+            results.append({
+                "Variable": variable,
+                "State": state,
+                "Target_Probabilities": prob_dist[target_variable].values
+            })
+
+        # Ursprünglichen Zustand wiederherstellen
+        if original_value is not None:
+            evidence[variable] = original_value
+        else:
+            del evidence[variable]
+
+        return pd.DataFrame(results)
+
+
 def __get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
                       evidence: Optional[List[str]] = None) -> Dict[str, List[str]]:
     """Return a subset of the dictionary of state names where keys correspond to the given `variable` of the  Bayesian

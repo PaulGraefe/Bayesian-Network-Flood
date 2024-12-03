@@ -311,6 +311,23 @@ target_variable = 'FLOOD_RISK'
 # Inferenz ausführen
 print_exact_inference(target_variable, exact_infer, evidence)
 
+
+variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE']
+
+# Sensitivitätsanalyse ausführen
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze)
+
+for variable in variables_to_analyze:
+    subset = sensitivity_results[sensitivity_results["Variable"] == variable]
+    plt.figure()
+    for idx, row in subset.iterrows():
+        plt.plot(row["Target_Probabilities"], label=f"{row['State']}")
+    plt.title(f"Sensitivität von {variable}")
+    plt.xlabel("Zustände der Zielvariablen")
+    plt.ylabel("Wahrscheinlichkeit")
+    plt.legend()
+    plt.show()
+
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-
     RAINFALL_AMOUNT: ['Huge', 'Medium', 'Little'], #-
