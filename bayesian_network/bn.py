@@ -44,7 +44,7 @@ variables = [
     RIVER_DISCHARGE,
     RIVER_EXPOSURE,
     STREET_DENSITY,
-    FOREST_DENSITY,
+    PROXIMITY_TO_FOREST,
     VULNERABILITY,
     PROXIMITY_TO_RIVER,
     EXPOSURE,
@@ -58,16 +58,16 @@ state_names_dictionary = {
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
     SOIL_MOISTURE: ['High', 'Medium', 'Low'],
-    SOIL_TYPE: ['L', 'LT', 'sL', 'T'],
+    SOIL_TYPE: ['L', 'LT', 'sL', 'T', 'Unknown'],
     RUNOFF_COEFFICIENT: ['High', 'Medium', 'Low'],
     ELEVATION: ['High', 'Medium', 'Low'],  # -
-    SLOPE: ['High', 'Moderate', 'Low'],  # -
+    SLOPE: ['High', 'Medium', 'Low'],  # -
     HAZARD: ['High', 'Medium', 'Low'],  # -
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
     RIVER_EXPOSURE: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
-    FOREST_DENSITY: ['High', 'Medium', 'Low'],
+    PROXIMITY_TO_FOREST: ['High', 'Medium', 'Low'],
     VULNERABILITY: ['High', 'Medium', 'Low'],  # -
     EXPOSURE: ['High', 'Medium', 'Low'],
     FLOOD_RISK: ['Yes', 'No']
@@ -89,8 +89,8 @@ evidence_dictionary = {
     RIVER_DISCHARGE: None,
     RIVER_EXPOSURE: [RIVER_DISCHARGE, PROXIMITY_TO_RIVER],
     STREET_DENSITY: None,
-    FOREST_DENSITY: None,
-    EXPOSURE: [RIVER_EXPOSURE, STREET_DENSITY, FOREST_DENSITY],
+    PROXIMITY_TO_FOREST: None,
+    EXPOSURE: [RIVER_EXPOSURE, STREET_DENSITY, PROXIMITY_TO_FOREST],
     FLOOD_RISK: [HAZARD, VULNERABILITY, EXPOSURE]
 }
 
@@ -114,7 +114,7 @@ edges = [
 
     (RIVER_EXPOSURE, EXPOSURE),
     (STREET_DENSITY, EXPOSURE),
-    (FOREST_DENSITY, EXPOSURE),
+    (PROXIMITY_TO_FOREST, EXPOSURE),
 
     (HAZARD, FLOOD_RISK),
     (VULNERABILITY, FLOOD_RISK),
@@ -156,7 +156,8 @@ values_dictionary = {
         [1 / 6],
         [1 / 6],
         [1 / 6],
-        [1 / 2]
+        [1 / 4],
+        [1 / 4]
     ],
 
     ELEVATION: [
@@ -177,16 +178,16 @@ values_dictionary = {
         [1 / 2]
     ],
 
-    FOREST_DENSITY: [
+    PROXIMITY_TO_FOREST: [
         [3 / 6],
         [1 / 6],
         [2 / 6]
     ],
 
     RUNOFF_COEFFICIENT: [
-        [0.75, 0.65, 0.4, 0.9,   0.6, 0.65, 0.35, 0.7,  0.5, 0.55, 0.3, 0.7,  0.8, 0.85, 0.7, 0.9,    0.65, 0.7, 0.55, 0.75,    0.45, 0.5, 0.35, 0.55],
-        [0.15, 0.25, 0.4, 0.09,  0.3, 0.25, 0.35, 0.2,  0.4, 0.35, 0.4, 0.2,  0.15, 0.1, 0.2, 0.09,   0.25, 0.25, 0.35, 0.125,  0.25, 0.3, 0.3, 0.25],
-        [0.1, 0.1, 0.2, 0.01,    0.1, 0.1, 0.3, 0.1,    0.1, 0.1, 0.3, 0.1,   0.05, 0.05, 0.1, 0.01,  0.1, 0.05, 0.1, 0.125,    0.3, 0.2, 0.35, 0.2]
+        [0.75, 0.65, 0.4, 0.9, 1/3,   0.6, 0.65, 0.35, 0.7, 1/3,  0.5, 0.55, 0.3, 0.7, 1/3,  0.8, 0.85, 0.7, 0.9, 1/3,    0.65, 0.7, 0.55, 0.75,1/3,    0.45, 0.5, 0.35, 0.55, 1/3],
+        [0.15, 0.25, 0.4, 0.09, 1/3, 0.3, 0.25, 0.35, 0.2, 1/3,  0.4, 0.35, 0.4, 0.2, 1/3,  0.15, 0.1, 0.2, 0.09, 1/3,   0.25, 0.25, 0.35, 0.125, 1/3,  0.25, 0.3, 0.3, 0.25, 1/3],
+        [0.1, 0.1, 0.2, 0.01, 1/3,  0.1, 0.1, 0.3, 0.1, 1/3,    0.1, 0.1, 0.3, 0.1, 1/3,   0.05, 0.05, 0.1, 0.01, 1/3,  0.1, 0.05, 0.1, 0.125, 1/3,    0.3, 0.2, 0.35, 0.2, 1/3]
     ],
 
     RIVER_DISCHARGE: [
@@ -257,76 +258,68 @@ model.add_cpds(*[cpds[k] for k in cpds])
 
 exact_infer = VariableElimination(model)
 
-print_exact_inference(FLOOD_RISK, exact_infer)
-
-evidence = {
-
+# Feste Werte definieren
+fixed_values = {
     'RAINFALL_INTENSITY': 'High',
     'TEMPERATURE': 'Medium',
-    'SOIL_MOISTURE':  'High',
-    'RIVER_DISCHARGE': 'High',
-    'LAND_USE': 'Greenland',
-    'SOIL_TYPE': 'T',
-    'ELEVATION': 'Low',
-    'SLOPE': 'Low',
-    'PROXIMITY_TO_RIVER': 'Low',
-    'FOREST_DENSITY': 'Low',
-    'STREET_DENSITY': 'High'
+    'SOIL_MOISTURE': 'High',
+    'RIVER_DISCHARGE': 'High'
 }
 
-evidence2 = {
+# CSV einlesen
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flstkTEST.csv'
+output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk.csv'
+df = pd.read_csv(input_file, delimiter=';')
 
-    'RAINFALL_INTENSITY': 'High',
-    'TEMPERATURE': 'High',
-    'SOIL_MOISTURE':  'Low',
-    'RIVER_DISCHARGE': 'Low',
-    'LAND_USE': 'Greenland',
-    'SOIL_TYPE': 'L',
-    'ELEVATION': 'High',
-    'SLOPE': 'High',
-    'PROXIMITY_TO_RIVER': 'High',
-    'FOREST_DENSITY': 'High',
-    'STREET_DENSITY': 'Low'
-}
+# Ergebnis für jede Zeile berechnen
+results = []
+counter = 1
+for index, row in df.iterrows():
+    # Evidenz aus der CSV-Zeile extrahieren
+    evidence = {
+        'ELEVATION': row['ELEVATION'],
+        'SLOPE': row['SLOPE'],
+        'PROXIMITY_TO_RIVER': row['PROXIMITY_TO_RIVER'],
+        'PROXIMITY_TO_FOREST': row['PROXIMITY_TO_FOREST'],
+        'STREET_DENSITY': row['STREET_DENSITY'],
+        'LAND_USE': row['LAND_USE'],
+        'SOIL_TYPE': row['SOIL_TYPE']
+    }
 
-scenarioHigh = {
+    # Feste Werte mit CSV-Werten kombinieren
+    combined_evidence = {**evidence, **fixed_values}
 
-    'RAINFALL_INTENSITY': 'Medium',
-    'TEMPERATURE': 'Medium',
-    'SOIL_MOISTURE':  'High',
-    'RIVER_DISCHARGE': 'High',
-    'LAND_USE': 'Farmland',
-    'SOIL_TYPE': 'LT',
-    'ELEVATION': 'Low',
-    'SLOPE': 'Low',
-    'PROXIMITY_TO_RIVER': 'High',
-    'FOREST_DENSITY': 'Low',
-    'STREET_DENSITY': 'High'
-}
+    # Inferenz ausführen
+    #result = exact_infer.query(variables=['FLOOD_RISK'], evidence=combined_evidence, show_progress=False)
+
+    # Zielvariable
+    target_variable = 'FLOOD_RISK'
+
+    # Inferenz ausführen
+    print(counter)
+    counter = counter + 1
+    print_exact_inference(target_variable, exact_infer, evidence)
+
+    # Ergebnis speichern
+    #flood_risk = result.values.argmax()  # Risiko basierend auf der höchsten Wahrscheinlichkeit
+    #results.append({'oid': row['oid'], 'FLOOD_RISK': flood_risk})
+
+# Ergebnisse als DataFrame speichern
+#result_df = pd.DataFrame(results)
+
+# Ergebnisse in eine neue CSV speichern
+#result_df.to_csv(output_file, index=False, sep=';')
+
+#print(f"Ergebnisse wurden in {output_file} gespeichert.")
 
 
-# Zielvariable
-target_variable = 'FLOOD_RISK'
-
-# Inferenz ausführen
-print_exact_inference(target_variable, exact_infer, evidence)
 
 
 variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE']
 
 # Sensitivitätsanalyse ausführen
-sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze)
+#sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze)
 
-for variable in variables_to_analyze:
-    subset = sensitivity_results[sensitivity_results["Variable"] == variable]
-    plt.figure()
-    for idx, row in subset.iterrows():
-        plt.plot(row["Target_Probabilities"], label=f"{row['State']}")
-    plt.title(f"Sensitivität von {variable}")
-    plt.xlabel("Zustände der Zielvariablen")
-    plt.ylabel("Wahrscheinlichkeit")
-    plt.legend()
-    plt.show()
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-

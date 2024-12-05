@@ -1,0 +1,10 @@
+oid;ELEVATION;SLOPE;PROXIMITY_TO_RIVER;PROXIMITY_TO_FOREST;STREET_DENSITY;LAND_USE;SOIL_TYPE
+DEBWL0010004I6OAFL;High;High;High;Low;High;Greenland;T
+DEBWL0010004I7CWFL;Medium;High;Low;High;Medium;Greenland;T
+DEBWL0010004I7UJFL;Low;Low;High;High;Medium;Greenland;Unknown
+DEBWL0010004I7mQFL;Medium;High;High;High;High;Greenland;T
+DEBWL0010004I7R1FL;Medium;Medium;High;High;High;Greenland;Unknown
+DEBWL0010004I84EFL;Low;Low;Medium;High;High;Greenland;T
+DEBWL0010004I7UIFL;Low;Low;High;High;Medium;Greenland;Unknown
+DEBWL0010004I6VYFL;Medium;High;High;High;Low;Greenland;Unknown
+DEBWL0010004I7mPFL;High;High;High;High;High;Greenland;T

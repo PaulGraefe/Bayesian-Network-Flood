@@ -9,6 +9,38 @@ from pgmpy.inference.ExactInference import VariableElimination
 from extended_classes import ExtendedApproxInference
 
 
+# Funktion zur Durchführung der Inferenz
+def calculate_flood_risk(row, target_variable, exact_infer):
+    # Feste Werte definieren
+    fixed_values = {
+        'RAINFALL_INTENSITY': 'High',
+        'TEMPERATURE': 'Medium',
+        'SOIL_MOISTURE': 'High',
+        'RIVER_DISCHARGE': 'High'
+    }
+
+    # Mapping der CSV-Spalten zu den Variablen des Netzwerks
+    evidence = {
+        'ELEVATION': row['ELEVATION'],
+        'SLOPE': row['SLOPE'],
+        'PROXIMITY_TO_RIVER': row['PROXIMITY_TO_RIVER'],
+        'PROXIMITY_TO_FOREST': row['PROXIMITY_TO_FOREST'],
+        'STREET_DENSITY': row['STREET_DENSITY'],
+        'LAND_USE': row['LAND_USE'],
+        'SOIL_TYPE': row['SOIL_TYPE']
+    }
+
+    # Feste Werte mit den CSV-Werten kombinieren
+    combined_evidence = {**evidence, **fixed_values}
+
+    # Inferenz ausführen
+    result = exact_infer(target_variable, combined_evidence)
+    return result
+
+
+
+
+
 def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze):
     results = []
 
