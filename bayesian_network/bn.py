@@ -298,7 +298,8 @@ for index, row in df.iterrows():
     # Inferenz ausführen
     print(counter)
     counter = counter + 1
-    print_exact_inference(target_variable, exact_infer, evidence)
+    #print_exact_inference(target_variable, exact_infer, evidence)
+    print_exact_inference_one_state(target_variable, exact_infer, evidence)
 
     # Ergebnis speichern
     #flood_risk = result.values.argmax()  # Risiko basierend auf der höchsten Wahrscheinlichkeit

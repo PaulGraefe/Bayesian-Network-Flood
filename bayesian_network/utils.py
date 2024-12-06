@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 from pgmpy.factors.discrete.CPD import TabularCPD
@@ -36,9 +35,6 @@ def calculate_flood_risk(row, target_variable, exact_infer):
     # Inferenz ausführen
     result = exact_infer(target_variable, combined_evidence)
     return result
-
-
-
 
 
 def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze):
@@ -226,6 +222,33 @@ def print_exact_inference(variable: str, infer: VariableElimination,
     print(f"Exact Inference to find P({variable}{evidence_str})\n")
     print(infer.query([variable], show_progress=False, evidence=evidence))
 
+
+def print_exact_inference_one_state(variable: str, infer: VariableElimination,
+                                    evidence: Optional[Dict[str, List[str]]] = None) -> None:
+    """Prints the first state of the exact inference table of a variable of a Bayesian Network given a specific evidence.
+
+    Parameters
+    ----------
+    variable : str
+        Variable of the Bayesian Network for which the exact inference on its discrete states is computed.
+    infer : VariableElimination
+        Object to apply exact inference on `variable` with the Variable Elimination method.
+    evidence : Optional[Dict[str, List[str]]] (default: None)
+        Dictionary which keys are evidence of `variable` in the Bayesian Network and which values are their selected
+        state.
+    """
+    evidence_str = '' if evidence is None else f" | {', '.join([f'{k} = {v}' for k, v in evidence.items()])}"
+
+    #print(f"Exact Inference to find P({variable}{evidence_str})\n")
+    result = infer.query([variable], show_progress=False, evidence=evidence)
+    try:
+        probability_yes = result.values[0]  # Index 0 entspricht dem Zustand 'Yes'
+       #print(f"Wahrscheinlichkeit für {variable} = Yes: {probability_yes}")
+        print(probability_yes)
+
+    except IndexError:
+        print(f"Fehler: Zustand 'Yes' für {variable} nicht gefunden oder nicht definiert.")
+        return None
 
 def print_approximate_inference(variable: str, infer: ExtendedApproxInference, n_samples=1_000,
                                 evidence: Optional[Dict[str, List[str]]] = None, use_weighted_likelihood=False,
