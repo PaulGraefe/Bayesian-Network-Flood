@@ -266,8 +266,24 @@ fixed_values = {
     'RIVER_DISCHARGE': 'High'
 }
 
+evidence2 = {
+    'RAINFALL_INTENSITY': 'High',
+    'TEMPERATURE': 'Medium',
+    'SOIL_MOISTURE': 'High',
+    'RIVER_DISCHARGE': 'High',
+    'ELEVATION': 'Low',
+    'SLOPE': 'Low',
+    'PROXIMITY_TO_RIVER': 'Low',
+    'PROXIMITY_TO_FOREST': 'Medium',
+    "STREET_DENSITY": 'Medium',
+    'LAND_USE': "Greenland",
+    "SOIL_TYPE": "T"
+}
+
+print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
+
 # CSV einlesen
-input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flstkTEST.csv'
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final.csv'
 output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk.csv'
 df = pd.read_csv(input_file, delimiter=';')
 
@@ -299,20 +315,18 @@ for index, row in df.iterrows():
     print(counter)
     counter = counter + 1
     #print_exact_inference(target_variable, exact_infer, evidence)
-    print_exact_inference_one_state(target_variable, exact_infer, evidence)
 
-    # Ergebnis speichern
-    #flood_risk = result.values.argmax()  # Risiko basierend auf der höchsten Wahrscheinlichkeit
-    #results.append({'oid': row['oid'], 'FLOOD_RISK': flood_risk})
+    probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
+    print(probability_yes)
+    results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
 
 # Ergebnisse als DataFrame speichern
-#result_df = pd.DataFrame(results)
+result_df = pd.DataFrame(results)
 
 # Ergebnisse in eine neue CSV speichern
-#result_df.to_csv(output_file, index=False, sep=';')
+result_df.to_csv(output_file, index=False, sep=';')
 
-#print(f"Ergebnisse wurden in {output_file} gespeichert.")
-
+print(f"Ergebnisse wurden in {output_file} gespeichert.")
 
 
 

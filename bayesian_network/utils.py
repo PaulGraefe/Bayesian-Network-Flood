@@ -223,9 +223,9 @@ def print_exact_inference(variable: str, infer: VariableElimination,
     print(infer.query([variable], show_progress=False, evidence=evidence))
 
 
-def print_exact_inference_one_state(variable: str, infer: VariableElimination,
-                                    evidence: Optional[Dict[str, List[str]]] = None) -> None:
-    """Prints the first state of the exact inference table of a variable of a Bayesian Network given a specific evidence.
+def get_exact_inference_one_state(variable: str, infer: VariableElimination,
+                                  evidence: Optional[Dict[str, List[str]]] = None) -> None:
+    """Returns the first state of the exact inference table of a variable of a Bayesian Network given a specific evidence.
 
     Parameters
     ----------
@@ -244,7 +244,7 @@ def print_exact_inference_one_state(variable: str, infer: VariableElimination,
     try:
         probability_yes = result.values[0]  # Index 0 entspricht dem Zustand 'Yes'
        #print(f"Wahrscheinlichkeit für {variable} = Yes: {probability_yes}")
-        print(probability_yes)
+        return probability_yes
 
     except IndexError:
         print(f"Fehler: Zustand 'Yes' für {variable} nicht gefunden oder nicht definiert.")
