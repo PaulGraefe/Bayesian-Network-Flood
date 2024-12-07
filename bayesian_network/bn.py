@@ -142,8 +142,8 @@ values_dictionary = {
     ],
 
     LAND_USE: [
-        [0.65],
-        [0.35]
+        [2561 / 3659],
+        [1098 / 3659]
     ],
 
     SOIL_MOISTURE: [
@@ -153,35 +153,35 @@ values_dictionary = {
     ],
 
     SOIL_TYPE: [
-        [1 / 6],
-        [1 / 6],
-        [1 / 6],
-        [1 / 4],
-        [1 / 4]
+        [404 / 3659],
+        [271 / 3659],
+        [136 / 3659],
+        [1747 / 3659],
+        [1101 / 3659]
     ],
 
     ELEVATION: [
-        [1 / 3],
-        [1 / 3],
-        [1 / 3]
+        [1129 / 3659],
+        [1757 / 3659],
+        [773 / 3659]
     ],
 
     SLOPE: [
-        [1 / 3],
-        [1 / 3],
-        [1 / 3]
+        [2207 / 3659],
+        [689 / 3659],
+        [763 / 3659]
     ],
 
     STREET_DENSITY: [
-        [1 / 6],
-        [1 / 3],
-        [1 / 2]
+        [1454 / 3659],
+        [1647 / 3659],
+        [558 / 3659]
     ],
 
     PROXIMITY_TO_FOREST: [
-        [3 / 6],
-        [1 / 6],
-        [2 / 6]
+        [2413 / 3659],
+        [653 / 3659],
+        [593 / 3659]
     ],
 
     RUNOFF_COEFFICIENT: [
@@ -197,9 +197,9 @@ values_dictionary = {
     ],
 
     PROXIMITY_TO_RIVER: [
-        [2 / 6],
-        [1 / 6],
-        [3 / 6]
+        [3207 / 3659],
+        [226 / 3659],
+        [226 / 3659]
     ],
 
     HAZARD: [
@@ -283,8 +283,8 @@ evidence2 = {
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
 # CSV einlesen
-input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final.csv'
-output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk.csv'
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final_v2.csv'
+output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk_v2.csv'
 df = pd.read_csv(input_file, delimiter=';')
 
 # Ergebnis für jede Zeile berechnen
