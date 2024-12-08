@@ -279,7 +279,7 @@ evidence2 = {
     'LAND_USE': "Greenland",
     "SOIL_TYPE": "T"
 }
-
+print("simple example")
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
 # CSV einlesen
