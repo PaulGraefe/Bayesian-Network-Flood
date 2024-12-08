@@ -266,7 +266,7 @@ fixed_values = {
     'RIVER_DISCHARGE': 'High'
 }
 
-evidence2 = {
+evidence = {
     'RAINFALL_INTENSITY': 'High',
     'TEMPERATURE': 'Medium',
     'SOIL_MOISTURE': 'High',
@@ -280,61 +280,14 @@ evidence2 = {
     "SOIL_TYPE": "T"
 }
 print("simple example")
-print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
-
-# CSV einlesen
-input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final_v2.csv'
-output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk_v2.csv'
-df = pd.read_csv(input_file, delimiter=';')
-
-# Ergebnis für jede Zeile berechnen
-results = []
-counter = 1
-for index, row in df.iterrows():
-    # Evidenz aus der CSV-Zeile extrahieren
-    evidence = {
-        'ELEVATION': row['ELEVATION'],
-        'SLOPE': row['SLOPE'],
-        'PROXIMITY_TO_RIVER': row['PROXIMITY_TO_RIVER'],
-        'PROXIMITY_TO_FOREST': row['PROXIMITY_TO_FOREST'],
-        'STREET_DENSITY': row['STREET_DENSITY'],
-        'LAND_USE': row['LAND_USE'],
-        'SOIL_TYPE': row['SOIL_TYPE']
-    }
-
-    # Feste Werte mit CSV-Werten kombinieren
-    combined_evidence = {**evidence, **fixed_values}
-
-    # Inferenz ausführen
-    #result = exact_infer.query(variables=['FLOOD_RISK'], evidence=combined_evidence, show_progress=False)
-
-    # Zielvariable
-    target_variable = 'FLOOD_RISK'
-
-    # Inferenz ausführen
-    print(counter)
-    counter = counter + 1
-    #print_exact_inference(target_variable, exact_infer, evidence)
-
-    probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
-    print(probability_yes)
-    results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
-
-# Ergebnisse als DataFrame speichern
-result_df = pd.DataFrame(results)
-
-# Ergebnisse in eine neue CSV speichern
-result_df.to_csv(output_file, index=False, sep=';')
-
-print(f"Ergebnisse wurden in {output_file} gespeichert.")
-
+print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence))
 
 
 variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE']
+target_variable = 'FLOOD_RISK'
 
-# Sensitivitätsanalyse ausführen
-#sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze)
-
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze, model)
+print(sensitivity_results)
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-
