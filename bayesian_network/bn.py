@@ -283,11 +283,28 @@ print("simple example")
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence))
 
 
-variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE']
+variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE', 'RIVER_DISCHARGE', 'ELEVATION', 'SLOPE',
+                        'PROXIMITY_TO_RIVER', 'PROXIMITY_TO_FOREST', 'STREET_DENSITY', 'LAND_USE', 'SOIL_TYPE']
+
+components_to_analyze = ["HAZARD", "VULNERABILITY", "EXPOSURE", "RIVER_EXPOSURE", "RUNOFF_COEFFICIENT"]
+
 target_variable = 'FLOOD_RISK'
 
-sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze, model)
-print(sensitivity_results)
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, components_to_analyze, model)
+#print(sensitivity_results)
+plot_sensitivity_results(sensitivity_results)
+
+variable_pair = ("ELEVATION", "SLOPE")
+
+# Wechselwirkungen analysieren
+interaction_results = analyze_variable_interaction(
+    target_variable="FLOOD_RISK",
+    inference=exact_infer,
+    variable_pair=variable_pair,
+    model=model,
+    evidence=evidence
+)
+print(interaction_results)
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-

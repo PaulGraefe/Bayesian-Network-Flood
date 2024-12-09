@@ -1,5 +1,8 @@
+import itertools
+
 import numpy as np
 import pandas as pd
+from matplotlib import pyplot as plt
 from pgmpy.factors.discrete.CPD import TabularCPD
 from typing import Dict, List, Optional
 
@@ -9,6 +12,37 @@ from extended_classes import ExtendedApproxInference
 
 
 # Funktion zur Durchführung der Inferenz
+
+def analyze_variable_interaction(target_variable, inference, variable_pair, model, evidence):
+    var1, var2 = variable_pair
+    states_var1 = model.get_cpds(var1).state_names[var1]
+    states_var2 = model.get_cpds(var2).state_names[var2]
+
+    results = []
+
+    # Iteriere über alle Kombinationen der Zustände von var1 und var2
+    for state1, state2 in itertools.product(states_var1, states_var2):
+        evidence[var1] = state1
+        evidence[var2] = state2
+
+        # Führe Inferenz durch
+        prob_dist = inference.query([target_variable], evidence=evidence)
+
+        # Ergebnisse speichern
+        results.append({
+            "Variable1": var1,
+            "State1": state1,
+            "Variable2": var2,
+            "State2": state2,
+            "FLOOD_RISK_High": prob_dist.values[0]  # Annahme: High ist der erste Zustand
+        })
+
+    # Ursprüngliches Evidence wiederherstellen
+    del evidence[var1]
+    del evidence[var2]
+
+    return pd.DataFrame(results)
+
 
 def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze, model):
     results = []
@@ -23,7 +57,6 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
     # Iteriere über jede Variable, die analysiert werden soll
     for variable in variables_to_analyze:
         original_value = evidence.get(variable)
-        print(f"Sensitivitätsanalyse für Variable: {variable}")
 
         # Hole die möglichen Zustände der Variable
         try:
@@ -55,6 +88,39 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
 
     # Ergebnisse als DataFrame zurückgeben
     return pd.DataFrame(results)
+
+
+def plot_sensitivity_results(results_df, target_variable="FLOOD_RISK"):
+    """
+    Plots sensitivity analysis results for each variable as individual bar charts.
+
+    Args:
+    - results_df (pd.DataFrame): DataFrame containing 'Variable', 'State', and 'Target_Probabilities' columns.
+    - target_variable (str): The name of the target variable being analyzed (default: "FLOOD_RISK").
+
+    Returns:
+    None. Displays bar charts for each variable.
+    """
+    # Extract the probability for 'High' from the Target_Probabilities
+    results_df["FLOOD_RISK_High"] = results_df["Target_Probabilities"].apply(lambda x: x[0])
+
+    # Iterate over each unique variable and plot its states and corresponding probabilities
+    for variable in results_df["Variable"].unique():
+        subset = results_df[results_df["Variable"] == variable]
+
+        # Create the bar plot
+        plt.figure(figsize=(8, 6))
+        plt.bar(subset["State"], subset["FLOOD_RISK_High"], color="skyblue")
+
+        # Add titles and labels
+        plt.title(f"Sensitivity Analysis for {variable} ({target_variable} = High)", fontsize=14)
+        plt.xlabel("State", fontsize=12)
+        plt.ylabel(f"{target_variable} = High Probability", fontsize=12)
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+
+        # Show the plot
+        plt.show()
 
 
 def __get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
@@ -231,12 +297,13 @@ def get_exact_inference_one_state(variable: str, infer: VariableElimination,
     result = infer.query([variable], show_progress=False, evidence=evidence)
     try:
         probability_yes = result.values[0]  # Index 0 entspricht dem Zustand 'Yes'
-       #print(f"Wahrscheinlichkeit für {variable} = Yes: {probability_yes}")
+        #print(f"Wahrscheinlichkeit für {variable} = Yes: {probability_yes}")
         return probability_yes
 
     except IndexError:
         print(f"Fehler: Zustand 'Yes' für {variable} nicht gefunden oder nicht definiert.")
         return None
+
 
 def print_approximate_inference(variable: str, infer: ExtendedApproxInference, n_samples=1_000,
                                 evidence: Optional[Dict[str, List[str]]] = None, use_weighted_likelihood=False,
