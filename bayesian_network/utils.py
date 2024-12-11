@@ -67,6 +67,14 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
             raise ValueError(f"Keine CPD für die Variable {variable} im Modell gefunden.")
         return cpd.state_names[variable]
 
+    # Berechnung der Wahrscheinlichkeiten ohne Evidenz
+    no_evidence_result = inference.query([target_variable], evidence={})  # Keine Eingabe gegeben
+    results.append({
+        "Variable": "No Evidence",
+        "State": "All",
+        "Target_Probabilities": no_evidence_result.values
+    })
+
     # Iteriere über jede Variable, die analysiert werden soll
     for variable in variables_to_analyze:
         original_value = evidence.get(variable)
@@ -90,7 +98,7 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
             results.append({
                 "Variable": variable,
                 "State": state,
-                "Target_Probabilities": prob_dist.values  # Korrekte Methode für Werte
+                "Target_Probabilities": prob_dist.values
             })
 
         # Ursprünglichen Zustand wiederherstellen
