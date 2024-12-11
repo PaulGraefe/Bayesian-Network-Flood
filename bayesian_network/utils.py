@@ -43,7 +43,20 @@ def analyze_variable_interaction(target_variable, inference, variable_pair, mode
 
     return pd.DataFrame(results)
 
+''' 
+Ermitteln der Zustände der Variablen:
 
+Die Funktion holt die Zustände (z. B. „High“, „Medium“, „Low“) der analysierten Variablen über ihre CPDs.
+Iterative Änderung der Evidenz:
+
+Für jede Variable und jeden Zustand wird der Zustand in der Evidenz geändert. Die Evidenz beeinflusst die Zielvariable (Hazard, also FLOOD_RISK in Ihrem Fall).
+Berechnung der Wahrscheinlichkeitsverteilung (Inference):
+
+Die Funktion verwendet eine Inferenzmethode (z. B. Vorwärtsinferenz), um die Wahrscheinlichkeitsverteilung der Zielvariable (FLOOD_RISK) zu berechnen. Diese Verteilung basiert auf den aktuellen Werten der Evidenz und den CPDs des Modells.
+Speichern der Ergebnisse:
+
+Die Ergebnisse für jeden Zustand der analysierten Variablen werden gespeichert und später visualisiert.
+'''
 def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze, model):
     results = []
 
