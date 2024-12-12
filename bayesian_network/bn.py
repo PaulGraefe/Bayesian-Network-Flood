@@ -64,7 +64,7 @@ state_names_dictionary = {
     SLOPE: ['High', 'Medium', 'Low'],  # -
     HAZARD: ['High', 'Low'],  # -
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
-    RIVER_EXPOSURE: ['High', 'Medium', 'Low'],
+    RIVER_EXPOSURE: ['High', 'Low'],
     PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_FOREST: ['High', 'Medium', 'Low'],
@@ -185,9 +185,9 @@ values_dictionary = {
     ],
 
     RUNOFF_COEFFICIENT: [
-        [0.85, 0.75, 0.5, 0.95, 0.75,   0.6, 0.65, 0.35, 0.75, 0.65,  0.4, 0.45, 0.2, 0.7, 0.45,  0.9, 0.95, 0.8, 0.99, 0.95,       0.65, 0.7, 0.55, 0.85, 0.7,     0.45, 0.5, 0.35, 0.6, 0.5],
-        [0.1, 0.15, 0.3, 0.05, 0.15,   0.3, 0.25, 0.35, 0.15, 0.25,  0.3, 0.35, 0.3, 0.2, 0.35,  0.075, 0.05, 0.15, 0.01, 0.05,     0.25, 0.25, 0.35, 0.125, 0.25,   0.25, 0.3, 0.3, 0.3, 0.3],
-        [0.05, 0.1, 0.2, 0.0, 0.1,     0.1, 0.1, 0.3, 0.1, 0.1,      0.3, 0.2, 0.5, 0.1, 0.2,   0.025, 0.0, 0.05, 0.0, 0.0,        0.1,  0.05, 0.1, 0.025, 0.05,    0.3, 0.2, 0.35, 0.1, 0.2]
+        [0.85, 0.75, 0.5, 0.99, 0.75,   0.6, 0.65, 0.35, 0.9, 0.65,  0.4, 0.45, 0.2, 0.85, 0.45,  0.9, 0.95, 0.8, 0.99, 0.95,       0.65, 0.7, 0.55, 0.85, 0.7,     0.45, 0.5, 0.35, 0.6, 0.5],
+        [0.1, 0.15, 0.3, 0.01, 0.15,   0.3, 0.25, 0.35, 0.1, 0.25,  0.3, 0.35, 0.3, 0.1, 0.35,  0.075, 0.05, 0.15, 0.01, 0.05,     0.25, 0.25, 0.35, 0.125, 0.25,   0.25, 0.3, 0.3, 0.3, 0.3],
+        [0.05, 0.1, 0.2, 0.0, 0.1,     0.1, 0.1, 0.3, 0.0, 0.1,      0.3, 0.2, 0.5, 0.05, 0.2,   0.025, 0.0, 0.05, 0.0, 0.0,        0.1,  0.05, 0.1, 0.025, 0.05,    0.3, 0.2, 0.35, 0.1, 0.2]
     ],
 
     RIVER_DISCHARGE: [
@@ -214,14 +214,13 @@ values_dictionary = {
     ],
 
     RIVER_EXPOSURE: [
-        [0.1, 0.3, 0.99, 0.05, 0.2, 0.35, 0.0, 0.1, 0.2],
-        [0.2, 0.5, 0.01, 0.35, 0.4, 0.45, 0.01, 0.3, 0.45],
-        [0.7, 0.2, 0.0, 0.6, 0.4, 0.2, 0.99, 0.6, 0.35]
+        [0.1, 0.45, 0.99, 0.05, 0.3, 0.4, 0.01, 0.1, 0.2],
+        [0.9, 0.55, 0.01, 0.95, 0.7, 0.6, 0.99, 0.9, 0.8]
     ],
 
     EXPOSURE: [
-        [0.6, 0.7, 0.99,   0.4, 0.45, 0.7,  0.35, 0.4, 0.45,  0.5, 0.6, 0.7,   0.3, 0.45, 0.35,    0.25, 0.35, 0.45,  0.25, 0.2, 0.55,    0.15, 0.225, 0.275,    0.01, 0.1, 0.15],
-        [0.4, 0.3, 0.01,   0.6, 0.55, 0.3,  0.65, 0.6, 0.55,  0.5, 0.4, 0.3,   0.7, 0.55, 0.65,    0.75, 0.65, 0.55,   0.75, 0.8, 0.45,   0.85, 0.775, 0.725,    0.99, 0.9, 0.85]
+        [0.6, 0.7, 0.99,   0.4, 0.45, 0.7,  0.35, 0.4, 0.45,  0.25, 0.2, 0.55,    0.15, 0.225, 0.275,    0.01, 0.1, 0.15],
+        [0.4, 0.3, 0.01,   0.6, 0.55, 0.3,  0.65, 0.6, 0.55,   0.75, 0.8, 0.45,   0.85, 0.775, 0.725,    0.99, 0.9, 0.85]
 
     ],
 
@@ -230,6 +229,7 @@ values_dictionary = {
         [0.01, 0.25, 0.25, 0.6,   0.85, 0.95, 0.95, 0.99]
     ],
 }
+
 
 
 
@@ -311,12 +311,12 @@ variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE', 'R
 components_to_analyze = ["HAZARD", "VULNERABILITY", "EXPOSURE", "RIVER_EXPOSURE", "RUNOFF_COEFFICIENT", "RAINFALL_AMOUNT"]
 analyze_exposure = ["RIVER_EXPOSURE", "PROXIMITY_TO_RIVER", "RIVER_DISCHARGE", "STREET_DENSITY", "PROXIMITY_TO_FOREST"]
 
-analyze_vulnerability = ['SOIL_MOISTURE', 'ELEVATION', 'SLOPE', 'LAND_USE', 'SOIL_TYPE']
+analyze_vulnerability = ['SOIL_MOISTURE', 'ELEVATION', 'SLOPE', 'LAND_USE', 'SOIL_TYPE', "RUNOFF_COEFFICIENT"]
 
 analyze_hazard = ["RAINFALL_INTENSITY", "RAINFALL_AMOUNT", "TEMPERATURE", "HAZARD"]
-target_variable = 'FLOOD_RISK'
+target_variable = 'EXPOSURE'
 
-sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence3, variables_to_analyze + components_to_analyze, model)
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence3, analyze_exposure, model)
 #print(sensitivity_results)
 plot_sensitivity_results(sensitivity_results)
 
