@@ -257,7 +257,7 @@ fixed_values = {
     'RIVER_DISCHARGE': 'High'
 }
 
-evidence = {
+ev = {
     'RAINFALL_INTENSITY': 'High',
     'TEMPERATURE': 'Medium',
     'SOIL_MOISTURE': 'High',
@@ -270,6 +270,78 @@ evidence = {
     'LAND_USE': "Greenland",
     "SOIL_TYPE": "Unknown"
 }
+
+
+fixed_values = {
+    'RAINFALL_INTENSITY': 'High',
+    'TEMPERATURE': 'Medium',
+    'SOIL_MOISTURE': 'High',
+    'RIVER_DISCHARGE': 'High'
+}
+
+evidence2 = {
+    'RAINFALL_INTENSITY': 'High',
+    'TEMPERATURE': 'Medium',
+    'SOIL_MOISTURE': 'High',
+    'RIVER_DISCHARGE': 'High',
+    'ELEVATION': 'Low',
+    'SLOPE': 'Low',
+    'PROXIMITY_TO_RIVER': 'Low',
+    'PROXIMITY_TO_FOREST': 'Medium',
+    "STREET_DENSITY": 'Medium',
+    'LAND_USE': "Greenland",
+    "SOIL_TYPE": "T"
+}
+
+print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
+
+# CSV einlesen
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final.csv'
+output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk_v3.csv'
+df = pd.read_csv(input_file, delimiter=';')
+
+# Ergebnis für jede Zeile berechnen
+results = []
+counter = 1
+for index, row in df.iterrows():
+    # Evidenz aus der CSV-Zeile extrahieren
+    evidence = {
+        'ELEVATION': row['ELEVATION'],
+        'SLOPE': row['SLOPE'],
+        'PROXIMITY_TO_RIVER': row['PROXIMITY_TO_RIVER'],
+        'PROXIMITY_TO_FOREST': row['PROXIMITY_TO_FOREST'],
+        'STREET_DENSITY': row['STREET_DENSITY'],
+        'LAND_USE': row['LAND_USE'],
+        'SOIL_TYPE': row['SOIL_TYPE']
+    }
+
+    # Feste Werte mit CSV-Werten kombinieren
+    combined_evidence = {**evidence, **fixed_values}
+
+    # Inferenz ausführen
+    #result = exact_infer.query(variables=['FLOOD_RISK'], evidence=combined_evidence, show_progress=False)
+
+    # Zielvariable
+    target_variable = 'FLOOD_RISK'
+
+    # Inferenz ausführen
+    print(counter)
+    counter = counter + 1
+    #print_exact_inference(target_variable, exact_infer, evidence)
+
+    probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
+    print(probability_yes)
+    results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
+
+# Ergebnisse als DataFrame speichern
+result_df = pd.DataFrame(results)
+
+# Ergebnisse in eine neue CSV speichern
+result_df.to_csv(output_file, index=False, sep=';')
+
+print(f"Ergebnisse wurden in {output_file} gespeichert.")
+
+
 
 lowest_flst = {
     'RAINFALL_INTENSITY': 'High',
@@ -314,11 +386,11 @@ analyze_exposure = ["RIVER_EXPOSURE", "PROXIMITY_TO_RIVER", "RIVER_DISCHARGE", "
 analyze_vulnerability = ['SOIL_MOISTURE', 'ELEVATION', 'SLOPE', 'LAND_USE', 'SOIL_TYPE', "RUNOFF_COEFFICIENT"]
 
 analyze_hazard = ["RAINFALL_INTENSITY", "RAINFALL_AMOUNT", "TEMPERATURE", "HAZARD"]
-target_variable = 'EXPOSURE'
+target_variable = 'FLOOD_RISK'
 
-sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence3, analyze_exposure, model)
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence3, variables_to_analyze + components_to_analyze, model)
 #print(sensitivity_results)
-plot_sensitivity_results(sensitivity_results)
+#plot_sensitivity_results(sensitivity_results)
 
 variable_pair = ("ELEVATION", "SLOPE")
 
@@ -330,7 +402,7 @@ interaction_results = analyze_variable_interaction(
     model=model,
     evidence=evidence
 )
-print(interaction_results)
+#print(interaction_results)
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-
