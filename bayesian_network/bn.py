@@ -290,9 +290,9 @@ components_to_analyze = ["HAZARD", "VULNERABILITY", "EXPOSURE", "RIVER_EXPOSURE"
 
 target_variable = 'FLOOD_RISK'
 
-sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, components_to_analyze, model)
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze + components_to_analyze, model)
 #print(sensitivity_results)
-plot_sensitivity_results(sensitivity_results)
+#plot_sensitivity_results(sensitivity_results)
 
 variable_pair = ("ELEVATION", "SLOPE")
 
@@ -305,6 +305,15 @@ interaction_results = analyze_variable_interaction(
     evidence=evidence
 )
 print(interaction_results)
+
+influence_df = calculate_variable_influence(
+    target_variable="FLOOD_RISK",
+    inference=exact_infer,
+    evidence=evidence,
+    variables_to_analyze=variables_to_analyze + components_to_analyze,
+    model=model
+)
+print(influence_df)
 
 '''
 RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-
