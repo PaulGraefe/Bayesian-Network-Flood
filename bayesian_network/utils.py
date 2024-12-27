@@ -11,7 +11,63 @@ from pgmpy.inference.ExactInference import VariableElimination
 from extended_classes import ExtendedApproxInference
 
 
-# Funktion zur Durchführung der Inferenz
+def calculate_variable_influence(target_variable, inference, evidence, variables_to_analyze, model):
+    influence_results = []
+
+    # Funktion, um die Zustände einer Variablen aus den CPDs zu extrahieren
+    def get_variable_states(variable):
+        cpd = model.get_cpds(variable)
+        if cpd is None:
+            raise ValueError(f"Keine CPD für die Variable {variable} im Modell gefunden.")
+        return cpd.state_names[variable]
+
+    # Iteriere über jede Variable, die analysiert werden soll
+    for variable in variables_to_analyze:
+        original_value = evidence.get(variable)
+
+        # Hole die möglichen Zustände der Variable
+        try:
+            states = get_variable_states(variable)
+        except ValueError as e:
+            print(str(e))
+            continue
+
+        # Liste zur Speicherung der Wahrscheinlichkeitsverteilungen der Zielvariablen
+        target_probabilities = []
+
+        # Iteriere über alle möglichen Werte der Variable
+        for state in states:
+            # Setze den neuen Zustand
+            evidence[variable] = state
+
+            # Führe Inferenz durch
+            prob_dist = inference.query([target_variable], evidence=evidence)
+
+            # Speichere die Wahrscheinlichkeitsverteilung
+            target_probabilities.append(prob_dist.values)
+
+        # Ursprünglichen Zustand wiederherstellen
+        if original_value is not None:
+            evidence[variable] = original_value
+        else:
+            del evidence[variable]
+
+        # Berechne den Einfluss als relative Änderung der Wahrscheinlichkeiten
+        # Z.B. die mittlere absolute Differenz
+        mean_probability_change = sum(
+            abs(target_probabilities[i] - target_probabilities[j]).mean()
+            for i in range(len(target_probabilities))
+            for j in range(i + 1, len(target_probabilities))
+        ) / len(target_probabilities)
+
+        # Ergebnisse speichern
+        influence_results.append({
+            "Variable": variable,
+            "Influence_Percentage": mean_probability_change * 100  # In Prozent umrechnen
+        })
+
+    # Ergebnisse als DataFrame zurückgeben
+    return pd.DataFrame(influence_results)
 
 def analyze_variable_interaction(target_variable, inference, variable_pair, model, evidence):
     var1, var2 = variable_pair
