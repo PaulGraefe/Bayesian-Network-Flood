@@ -407,7 +407,7 @@ interaction_results = analyze_variable_interaction(
 influence_df = calculate_variable_influence(
     target_variable="FLOOD_RISK",
     inference=exact_infer,
-    evidence=evidence,
+    evidence={},
     variables_to_analyze=variables_to_analyze + components_to_analyze,
     model=model
 )
