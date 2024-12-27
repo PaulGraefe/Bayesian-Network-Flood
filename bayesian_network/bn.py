@@ -296,8 +296,8 @@ evidence2 = {
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
 # CSV einlesen
-input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final.csv'
-output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk_v3.csv'
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/mb.csv'
+output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk_miedelsbachv3.csv'
 df = pd.read_csv(input_file, delimiter=';')
 
 # Ergebnis für jede Zeile berechnen

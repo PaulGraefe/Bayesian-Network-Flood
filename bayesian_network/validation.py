@@ -29,7 +29,7 @@ print("Maximum:", probabilities.max())
 
 # Histogramm der Wahrscheinlichkeiten plotten
 plt.hist(probabilities, bins=20, color='skyblue', edgecolor='black')
-plt.title("Verteilung der Überschwemmungswahrscheinlichkeiten")
+plt.title("Verteilung der Flutrisikowahrscheinlichkeiten")
 plt.xlabel("Wahrscheinlichkeit")
 plt.ylabel("Anzahl")
 plt.show()
