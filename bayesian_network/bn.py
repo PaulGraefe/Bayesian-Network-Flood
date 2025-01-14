@@ -53,7 +53,7 @@ variables = [
 print(f"Variables: {'; '.join(variables)}")
 
 state_names_dictionary = {
-    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],  # -
+    RAINFALL_INTENSITY: ['Hoch', 'Mittel', 'Niedrig'],  # -
     RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],  # -
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
@@ -65,7 +65,7 @@ state_names_dictionary = {
     HAZARD: ['High', 'Medium', 'Low'],  # -
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
     RIVER_EXPOSURE: ['High', 'Medium', 'Low'],
-    PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
+    PROXIMITY_TO_RIVER: ['Hoch', 'Mittel', 'Niedrig'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_FOREST: ['High', 'Medium', 'Low'],
     VULNERABILITY: ['High', 'Medium', 'Low'],  # -
@@ -280,7 +280,7 @@ evidence = {
     "SOIL_TYPE": "T"
 }
 print("simple example")
-print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence))
+#print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence))
 
 
 variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE', 'RIVER_DISCHARGE', 'ELEVATION', 'SLOPE',
