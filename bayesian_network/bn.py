@@ -1,6 +1,6 @@
 from readline import redisplay
 import warnings
-
+#https://www.figma.com/design/2MlljHCFH19KWvl5h3tYlO/heat-calculator-(Copy)?node-id=3-912&t=hZj77CvHKFbQXL0p-0
 from pgmpy.estimators import MaximumLikelihoodEstimator
 
 # Suppress pgmpy internal deprecated use of third party libraries.
@@ -53,8 +53,8 @@ variables = [
 print(f"Variables: {'; '.join(variables)}")
 
 state_names_dictionary = {
-    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],  # -
-    RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],  # -
+    RAINFALL_INTENSITY: ['Hoch', 'Mittel', 'Niedrig'],
+    RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
     SOIL_MOISTURE: ['High', 'Medium', 'Low'],
@@ -65,7 +65,7 @@ state_names_dictionary = {
     HAZARD: ['High', 'Low'],  # -
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
     RIVER_EXPOSURE: ['High', 'Low'],
-    PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
+    PROXIMITY_TO_RIVER: ['Hoch', 'Mittel', 'Niedrig'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_FOREST: ['High', 'Medium', 'Low'],
     VULNERABILITY: ['High', 'Low'],  # -
@@ -241,7 +241,7 @@ for k, v in cpds.items():
     # redisplay(cpd_to_pandas(v))
     print()
 
-model = ExtendedBayesianNetwork(edges)
+model = BayesianNetwork(edges)
 
 model.add_cpds(*[cpds[k] for k in cpds])
 
@@ -249,15 +249,7 @@ model.add_cpds(*[cpds[k] for k in cpds])
 
 exact_infer = VariableElimination(model)
 
-# Feste Werte definieren
-fixed_values = {
-    'RAINFALL_INTENSITY': 'High',
-    'TEMPERATURE': 'Medium',
-    'SOIL_MOISTURE': 'High',
-    'RIVER_DISCHARGE': 'High'
-}
-
-ev = {
+evidence = {
     'RAINFALL_INTENSITY': 'High',
     'TEMPERATURE': 'Medium',
     'SOIL_MOISTURE': 'High',
@@ -271,6 +263,7 @@ ev = {
     "SOIL_TYPE": "Unknown"
 }
 
+#print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence))
 
 fixed_values = {
     'RAINFALL_INTENSITY': 'High',
@@ -279,21 +272,20 @@ fixed_values = {
     'RIVER_DISCHARGE': 'High'
 }
 
-evidence2 = {
+evidenceMB = {
     'RAINFALL_INTENSITY': 'High',
     'TEMPERATURE': 'Medium',
     'SOIL_MOISTURE': 'High',
     'RIVER_DISCHARGE': 'High',
     'ELEVATION': 'Low',
-    'SLOPE': 'Low',
-    'PROXIMITY_TO_RIVER': 'Low',
-    'PROXIMITY_TO_FOREST': 'Medium',
-    "STREET_DENSITY": 'Medium',
-    'LAND_USE': "Greenland",
-    "SOIL_TYPE": "T"
+    'SLOPE': 'High',
+    'PROXIMITY_TO_RIVER': 'High',
+    'PROXIMITY_TO_FOREST': 'High',
+    "STREET_DENSITY": 'High',
+    'LAND_USE': "Farmland",
+    "SOIL_TYPE": "L"
 }
 
-print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
 # CSV einlesen
 input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/mb.csv'
@@ -325,19 +317,19 @@ for index, row in df.iterrows():
     target_variable = 'FLOOD_RISK'
 
     # Inferenz ausführen
-    print(counter)
+    #print(counter)
     counter = counter + 1
     #print_exact_inference(target_variable, exact_infer, evidence)
 
-    probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
-    print(probability_yes)
-    results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
+    #probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
+    #print(probability_yes)
+    #results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
 
 # Ergebnisse als DataFrame speichern
-result_df = pd.DataFrame(results)
+#result_df = pd.DataFrame(results)
 
 # Ergebnisse in eine neue CSV speichern
-result_df.to_csv(output_file, index=False, sep=';')
+#result_df.to_csv(output_file, index=False, sep=';')
 
 print(f"Ergebnisse wurden in {output_file} gespeichert.")
 
@@ -374,8 +366,8 @@ highest_flst = {
 evidence3 = {}
 
 print("simple example")
-print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, lowest_flst))
-print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, highest_flst))
+#print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, lowest_flst))
+#print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, highest_flst))
 
 variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE', 'RIVER_DISCHARGE', 'ELEVATION', 'SLOPE',
                         'PROXIMITY_TO_RIVER', 'PROXIMITY_TO_FOREST', 'STREET_DENSITY', 'LAND_USE', 'SOIL_TYPE']
@@ -390,7 +382,7 @@ target_variable = 'FLOOD_RISK'
 
 sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence3, variables_to_analyze + components_to_analyze, model)
 #print(sensitivity_results)
-#plot_sensitivity_results(sensitivity_results)
+plot_sensitivity_results(sensitivity_results)
 
 variable_pair = ("ELEVATION", "SLOPE")
 

@@ -167,13 +167,19 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
     return pd.DataFrame(results)
 
 
-def plot_sensitivity_results(results_df, target_variable="FLOOD_RISK"):
+import matplotlib.pyplot as plt
+import pandas as pd
+
+def plot_sensitivity_results(results_df, target_variable="FLOOD_RISK", bar_width=0.5, xlabel=None, ylabel=None):
     """
     Plots sensitivity analysis results for each variable as individual bar charts.
 
     Args:
     - results_df (pd.DataFrame): DataFrame containing 'Variable', 'State', and 'Target_Probabilities' columns.
     - target_variable (str): The name of the target variable being analyzed (default: "FLOOD_RISK").
+    - bar_width (float): The width of the bars in the plot (default: 0.5).
+    - xlabel (str): Custom label for the x-axis (default: None, uses "State").
+    - ylabel (str): Custom label for the y-axis (default: None, uses the target variable name).
 
     Returns:
     None. Displays bar charts for each variable.
@@ -187,17 +193,18 @@ def plot_sensitivity_results(results_df, target_variable="FLOOD_RISK"):
 
         # Create the bar plot
         plt.figure(figsize=(8, 6))
-        plt.bar(subset["State"], subset["FLOOD_RISK_High"], color="skyblue")
+        plt.bar(subset["State"], subset["FLOOD_RISK_High"], color="skyblue", width=bar_width)
 
         # Add titles and labels
-        plt.title(f"Sensitivity Analysis for {variable} ({target_variable} = High)", fontsize=14)
-        plt.xlabel("State", fontsize=12)
-        plt.ylabel(f"{target_variable} = High Probability", fontsize=12)
+        plt.title(f"Sensitivitätsanalyse für {variable} in Bezug auf das Flutrisiko", fontsize=14)
+        plt.xlabel(xlabel if xlabel else "Klassen", fontsize=12)
+        plt.ylabel(ylabel if ylabel else f"P(FLUTRISIKO = Hoch)", fontsize=12)
         plt.xticks(rotation=45)
         plt.tight_layout()
 
         # Show the plot
         plt.show()
+
 
 
 def __get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
