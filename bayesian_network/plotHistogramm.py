@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # CSV einlesen
 # Verwende den Semikolon (;) als Trennzeichen, da die Datei so strukturiert ist
-data = pd.read_csv("/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/validierung_r_v3.csv", sep=",")
+data = pd.read_csv("/bayesian_network/InferenceData/validierung_r_v3.csv", sep=",")
 
 # Die ersten Zeilen anzeigen, um sicherzustellen, dass die Daten korrekt eingelesen wurdenXX
 print(data.head())

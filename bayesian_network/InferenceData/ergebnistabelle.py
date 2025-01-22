@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # CSV-Datei einlesen
-data = pd.read_csv("/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/mb2_output2.csv")
+data = pd.read_csv("/bayesian_network/InferenceData/mb2_output2.csv")
 
 # Risiko in Kategorien einteilen
 def categorize_risk(value):

@@ -1,34 +1,16 @@
-from readline import redisplay
+
 import warnings
-#https://www.figma.com/design/2MlljHCFH19KWvl5h3tYlO/heat-calculator-(Copy)?node-id=3-912&t=hZj77CvHKFbQXL0p-0
-from pgmpy.estimators import MaximumLikelihoodEstimator
 
 # Suppress pgmpy internal deprecated use of third party libraries.
 warnings.simplefilter(action='ignore', category=FutureWarning)
 # Suppress UserWarning related to machine precision calculations of percentage.
 warnings.simplefilter(action='ignore', category=UserWarning)
 
-# Import internal modules.
 from utils import *
 from variables import *
 from extended_classes import *
-from pgmpy.utils import get_example_model
-
-
-# Import pgmpy modules.
-from pgmpy.factors.discrete.CPD import TabularCPD
-from pgmpy.inference import VariableElimination, ApproxInference
-from pgmpy.sampling import GibbsSampling
-
-# Import graphics related libraries and modules.
-import matplotlib.pyplot as plt
-# from IPython.display import display
-
-# Import other useful librares and modules.
-import numpy as np
+from pgmpy.inference import VariableElimination
 import pandas as pd
-import geopandas as gpd
-from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 variables = [
     RAINFALL_AMOUNT,
@@ -53,7 +35,7 @@ variables = [
 print(f"Variables: {'; '.join(variables)}")
 
 state_names_dictionary = {
-    RAINFALL_INTENSITY: ['Hoch', 'Mittel', 'Niedrig'],
+    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],
     RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
@@ -65,7 +47,7 @@ state_names_dictionary = {
     HAZARD: ['High', 'Low'],  # -
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
     RIVER_EXPOSURE: ['High', 'Low'],
-    PROXIMITY_TO_RIVER: ['Hoch', 'Mittel', 'Niedrig'],
+    PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_FOREST: ['High', 'Medium', 'Low'],
     VULNERABILITY: ['High', 'Low'],  # -
@@ -263,8 +245,6 @@ evidence = {
     "SOIL_TYPE": "Unknown"
 }
 
-#print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence))
-
 fixed_values = {
     'RAINFALL_INTENSITY': 'High',
     'TEMPERATURE': 'Medium',
@@ -287,10 +267,11 @@ evidenceMB = {
 }
 
 
-# CSV einlesen
-input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/mb.csv'
-output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk_miedelsbachv3.csv'
+# Berechnet für jede Zeile in der angegeben .csv-datei anhand der klassifzierung der datenbasierten variablen das Flutrsiiko für jedes Flurstück
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InferenceData/flst_final.csv'
+output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InferenceData/output_with_risk.csv'
 df = pd.read_csv(input_file, delimiter=';')
+
 
 # Ergebnis für jede Zeile berechnen
 results = []
@@ -310,20 +291,17 @@ for index, row in df.iterrows():
     # Feste Werte mit CSV-Werten kombinieren
     combined_evidence = {**evidence, **fixed_values}
 
-    # Inferenz ausführen
-    #result = exact_infer.query(variables=['FLOOD_RISK'], evidence=combined_evidence, show_progress=False)
-
     # Zielvariable
     target_variable = 'FLOOD_RISK'
 
     # Inferenz ausführen
-    #print(counter)
+    print(counter)
     counter = counter + 1
-    #print_exact_inference(target_variable, exact_infer, evidence)
+    print_exact_inference(target_variable, exact_infer, evidence)
 
-    #probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
-    #print(probability_yes)
-    #results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
+    probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
+
+    results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
 
 # Ergebnisse als DataFrame speichern
 #result_df = pd.DataFrame(results)

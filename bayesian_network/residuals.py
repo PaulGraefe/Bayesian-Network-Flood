@@ -4,7 +4,7 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
 # CSV-Datei einlesen
-file_path = "/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/validierung_r_v3.csv"  # Pfad zur CSV-Datei
+file_path = "/bayesian_network/InferenceData/validierung_r_v3.csv"  # Pfad zur CSV-Datei
 data = pd.read_csv(file_path)
 
 # Extrahiere tatsächliche Werte und Modellvorhersagen
