@@ -1,31 +1,15 @@
-from readline import redisplay
+
 import warnings
 
-from pgmpy.estimators import MaximumLikelihoodEstimator
-
-# Suppress pgmpy internal deprecated use of third party libraries.
 warnings.simplefilter(action='ignore', category=FutureWarning)
-# Suppress UserWarning related to machine precision calculations of percentage.
+
 warnings.simplefilter(action='ignore', category=UserWarning)
 
-# Import internal modules.
 from utils import *
 from variables import *
 from extended_classes import *
-from pgmpy.utils import get_example_model
+from pgmpy.inference import VariableElimination
 
-
-# Import pgmpy modules.
-from pgmpy.factors.discrete.CPD import TabularCPD
-from pgmpy.inference import VariableElimination, ApproxInference
-from pgmpy.sampling import GibbsSampling
-
-# Import graphics related libraries and modules.
-import matplotlib.pyplot as plt
-# from IPython.display import display
-
-# Import other useful librares and modules.
-import numpy as np
 import pandas as pd
 import geopandas as gpd
 from mpl_toolkits.axes_grid1 import make_axes_locatable
@@ -254,7 +238,6 @@ model = ExtendedBayesianNetwork(edges)
 
 model.add_cpds(*[cpds[k] for k in cpds])
 
-# plot_simple_bayesian_network(model)
 
 exact_infer = VariableElimination(model)
 
@@ -282,6 +265,7 @@ evidence2 = {
 
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
+# Berechnet für jede Zeile in der angegeben .csv-datei anhand der klassifzierung der datenbasierten variablen das Flutrsiiko für jedes Flurstück
 # CSV einlesen
 input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/flst_final.csv'
 output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/output_with_risk.csv'
@@ -305,19 +289,16 @@ for index, row in df.iterrows():
     # Feste Werte mit CSV-Werten kombinieren
     combined_evidence = {**evidence, **fixed_values}
 
-    # Inferenz ausführen
-    #result = exact_infer.query(variables=['FLOOD_RISK'], evidence=combined_evidence, show_progress=False)
-
     # Zielvariable
     target_variable = 'FLOOD_RISK'
 
     # Inferenz ausführen
     print(counter)
     counter = counter + 1
-    #print_exact_inference(target_variable, exact_infer, evidence)
+    print_exact_inference(target_variable, exact_infer, evidence)
 
     probability_yes = get_exact_inference_one_state(target_variable, exact_infer, combined_evidence)
-    print(probability_yes)
+
     results.append({'oid': row['oid'], 'FLOOD_RISK_Yes_Probability': probability_yes})
 
 # Ergebnisse als DataFrame speichern
@@ -328,23 +309,3 @@ result_df.to_csv(output_file, index=False, sep=';')
 
 print(f"Ergebnisse wurden in {output_file} gespeichert.")
 
-
-
-variables_to_analyze = ['RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE']
-
-# Sensitivitätsanalyse ausführen
-#sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, evidence, variables_to_analyze)
-
-
-'''
-RAINFALL_FREQUENCY: ['Frequent', 'Medium', 'Rare'], #-
-    RAINFALL_AMOUNT: ['Huge', 'Medium', 'Little'], #-
-    ELEVATION: ['High', 'Medium', 'Low'],#-
-    SLOPE: ['Steep', 'Flat'],#-
-    HAZARD: ['High', 'Medium', 'Low'],#-
-    AGRICULTURE_DENSITY: ['High', 'Medium', 'Low'],#-
-    VULNERABILITY: ['High', 'Medium', 'Low'],#-
-    RIVER_DENSITY: ['Dense', 'Sparse'],#-
-    EXPOSURE: ['High', 'Medium', 'Low'],
-    FLOOD_RISK: ['Yes', 'No']
-'''
