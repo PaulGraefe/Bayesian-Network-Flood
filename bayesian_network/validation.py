@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 
 # CSV einlesen
 # Verwende den Semikolon (;) als Trennzeichen, da die Datei so strukturiert ist
-data = pd.read_csv("/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/mbValiOutput.csv", sep=",")
+data = pd.read_csv("/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData/validierung_r_v3.csv", sep=",")
 
-# Die ersten Zeilen anzeigen, um sicherzustellen, dass die Daten korrekt eingelesen wurden
+# Die ersten Zeilen anzeigen, um sicherzustellen, dass die Daten korrekt eingelesen wurdenXX
 print(data.head())
 
 # Spaltennamen überprüfen
@@ -28,6 +28,6 @@ print("Maximum:", probabilities.max())
 # Histogramm der Wahrscheinlichkeiten plotten
 plt.hist(probabilities, bins=20, color='skyblue', edgecolor='black')
 plt.title("Verteilung der Flutrisikowahrscheinlichkeiten für das Gebiet Miedelsbach")
-plt.xlabel("Wahrscheinlichkeit")
-plt.ylabel("Anzahl")
+plt.xlabel("Wahrscheinlichkeiten der Flutrisikovariable")
+plt.ylabel("Anzahl der Flurstücke")
 plt.show()

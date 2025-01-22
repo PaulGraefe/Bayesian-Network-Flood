@@ -1,4 +1,4 @@
-fid,flaeche_ha,oid,flood_risk_probability,actualValue
+fid,flaeche_ha,oid,FLOOD,actualValue
 1,0.3764,DEBWL0010004I7WPFL,0.798,1
 2,0.2454,DEBWL0010004I6ZaFL,0.842,1
 3,0.2454,DEBWL0010004I6ZcFL,0.842,1
