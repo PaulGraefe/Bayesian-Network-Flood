@@ -11,8 +11,7 @@ from extended_classes import *
 from pgmpy.inference import VariableElimination
 
 import pandas as pd
-import geopandas as gpd
-from mpl_toolkits.axes_grid1 import make_axes_locatable
+
 
 variables = [
     RAINFALL_AMOUNT,
@@ -37,22 +36,22 @@ variables = [
 print(f"Variables: {'; '.join(variables)}")
 
 state_names_dictionary = {
-    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],  # -
-    RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],  # -
+    RAINFALL_INTENSITY: ['High', 'Medium', 'Low'],
+    RAINFALL_AMOUNT: ['High', 'Medium', 'Low'],
     TEMPERATURE: ['High', 'Medium', 'Low'],
     LAND_USE: ['Greenland', 'Farmland'],
     SOIL_MOISTURE: ['High', 'Medium', 'Low'],
     SOIL_TYPE: ['L', 'LT', 'sL', 'T', 'Unknown'],
     RUNOFF_COEFFICIENT: ['High', 'Medium', 'Low'],
-    ELEVATION: ['High', 'Medium', 'Low'],  # -
-    SLOPE: ['High', 'Medium', 'Low'],  # -
-    HAZARD: ['High', 'Medium', 'Low'],  # -
+    ELEVATION: ['High', 'Medium', 'Low'],
+    SLOPE: ['High', 'Medium', 'Low'],
+    HAZARD: ['High', 'Medium', 'Low'],
     RIVER_DISCHARGE: ['High', 'Medium', 'Low'],
     RIVER_EXPOSURE: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_RIVER: ['High', 'Medium', 'Low'],
     STREET_DENSITY: ['High', 'Medium', 'Low'],
     PROXIMITY_TO_FOREST: ['High', 'Medium', 'Low'],
-    VULNERABILITY: ['High', 'Medium', 'Low'],  # -
+    VULNERABILITY: ['High', 'Medium', 'Low'],
     EXPOSURE: ['High', 'Medium', 'Low'],
     FLOOD_RISK: ['Yes', 'No']
 }
@@ -266,7 +265,6 @@ evidence2 = {
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
 # Berechnet für jede Zeile in der angegeben .csv-datei anhand der klassifzierung der datenbasierten variablen das Flutrsiiko für jedes Flurstück
-# CSV einlesen
 input_file = '/bayesian_network/InferenceData/flst_final.csv'
 output_file = '/bayesian_network/InferenceData/output_with_risk.csv'
 df = pd.read_csv(input_file, delimiter=';')
