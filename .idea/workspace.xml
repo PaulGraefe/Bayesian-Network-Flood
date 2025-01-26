@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e2bc13a9-4c3c-4817-9eb1-0e0a3b92c6d7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/bayesian_network/bn.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/bn.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;PaulGraefe&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PaulGraefe/Bayesian-Network-Flood_prediction.git&quot;,
+    &quot;accountId&quot;: &quot;f652fea0-331d-40ec-ac4f-a8c057d5df6d&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+    <option name="showToolbar" value="false" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2pAv0o116YL5FkyaAltERQQrObW" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.bn.executor": "Run",
+    "Python.classification.executor": "Run",
+    "Python.consolidation.executor": "Run",
+    "Python.count_clasiffication.executor": "Run",
+    "Python.ergebnistabelle.executor": "Run",
+    "Python.hour_to_day.executor": "Run",
+    "Python.residuals.executor": "Run",
+    "Python.rianfall_intensity_dwd_classification.executor": "Run",
+    "Python.six_scenarios.executor": "Run",
+    "Python.tocsv.executor": "Run",
+    "Python.utils.executor": "Run",
+    "Python.validation.executor": "Run",
+    "Python.variables.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ToolWindowProblems.ShowToolbar": "false",
+    "database.data.extractors.current.export.id": "Tab-separated (TSV)_id",
+    "database.data.extractors.current.id": "Tab-separated (TSV)_id",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bayesian_network/InterferenceData" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bayesian_network/InterferenceData" />
+      <recent name="$PROJECT_DIR$/data-processing" />
+      <recent name="$PROJECT_DIR$/bayesian_network" />
+      <recent name="$PROJECT_DIR$/data/open-meteo-data/hourly" />
+      <recent name="$PROJECT_DIR$/data" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Bayesian-Network-Flood-Prediction" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.bn" />
+        <item itemvalue="Python.bn" />
+        <item itemvalue="Python.bn" />
+        <item itemvalue="Python.bn" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.18034.82" />
+        <option value="bundled-python-sdk-975db3bf15a3-2767605e8bc2-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.18034.82" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2bc13a9-4c3c-4817-9eb1-0e0a3b92c6d7" name="Changes" comment="" />
+      <created>1732221474037</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732221474037</updated>
+      <workItem from="1732221475180" duration="31687000" />
+      <workItem from="1732524569404" duration="1677000" />
+      <workItem from="1732531455963" duration="32526000" />
+      <workItem from="1733663859267" duration="37423000" />
+      <workItem from="1734282658310" duration="4692000" />
+      <workItem from="1734591922885" duration="18572000" />
+      <workItem from="1735206291413" duration="6103000" />
+      <workItem from="1736072636295" duration="4186000" />
+      <workItem from="1736168960401" duration="14042000" />
+      <workItem from="1736762196707" duration="5766000" />
+      <workItem from="1737103596759" duration="6935000" />
+      <workItem from="1737619705376" duration="224000" />
+      <workItem from="1737704837807" duration="403000" />
+      <workItem from="1737924714739" duration="96000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/scientificProject$bn.coverage" NAME="bn Coverage Results" MODIFIED="1732394769102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bayesian_network" />
+  </component>
+</project>

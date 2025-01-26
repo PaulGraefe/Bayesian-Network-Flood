@@ -265,8 +265,8 @@ evidence2 = {
 print(get_exact_inference_one_state("FLOOD_RISK", exact_infer, evidence2))
 
 # Berechnet für jede Zeile in der angegeben .csv-datei anhand der klassifzierung der datenbasierten variablen das Flutrsiiko für jedes Flurstück
-input_file = '/bayesian_network/InferenceData/flst_final.csv'
-output_file = '/bayesian_network/InferenceData/output_with_risk.csv'
+input_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InferenceData/flst_final.csv'
+output_file = '/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InferenceData/output_with_risk.csv'
 df = pd.read_csv(input_file, delimiter=';')
 
 # Ergebnis für jede Zeile berechnen
