@@ -305,5 +305,5 @@ result_df = pd.DataFrame(results)
 # Ergebnisse in eine neue CSV speichern
 result_df.to_csv(output_file, index=False, sep=';')
 
-print(f"Ergebnisse wurden in {output_file} gespeichert.")
+
 
