@@ -31,12 +31,12 @@ implementiert die Variablen, die für die Analyse mit dem BN relevant sind
 
 ### InferenceData
 
-enthält die Eingaben- und Ausgaben CSV-Datensätze fpr die Flutriskoberechnung der Flurstücke
+enthält die Eingaben- und Ausgaben CSV-Datensätze für die Flutriskoberechnung der Flurstücke
 ## data
 
 enhält allle relevanten  CSV-Datensätze für sich zeitlich verändernde Variablen
 
 ## data-processing
 
-enhält alle Datenprozessierungsskripte mit denen die  CSV-Datensätze aufbereitet und klassifiziert wurden
+enhält alle Datenprozessierungsskripte mit denen die CSV-Datensätze aufbereitet und klassifiziert wurden
 
