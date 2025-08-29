@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2bc13a9-4c3c-4817-9eb1-0e0a3b92c6d7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/bayesian_network/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bayesian_network/InferenceData/output_with_risk.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/InferenceData/output_with_risk.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bayesian_network/bn.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/bn.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,44 +57,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.bn.executor": "Run",
-    "Python.classification.executor": "Run",
-    "Python.consolidation.executor": "Run",
-    "Python.count_clasiffication.executor": "Run",
-    "Python.ergebnistabelle.executor": "Run",
-    "Python.hour_to_day.executor": "Run",
-    "Python.residuals.executor": "Run",
-    "Python.rianfall_intensity_dwd_classification.executor": "Run",
-    "Python.six_scenarios.executor": "Run",
-    "Python.tocsv.executor": "Run",
-    "Python.utils.executor": "Run",
-    "Python.validation.executor": "Run",
-    "Python.variables.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindowProblems.ShowToolbar": "false",
-    "database.data.extractors.current.export.id": "Tab-separated (TSV)_id",
-    "database.data.extractors.current.id": "Tab-separated (TSV)_id",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.bn.executor&quot;: &quot;Run&quot;,
+    &quot;Python.classification.executor&quot;: &quot;Run&quot;,
+    &quot;Python.consolidation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.count_clasiffication.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ergebnistabelle.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hour_to_day.executor&quot;: &quot;Run&quot;,
+    &quot;Python.residuals.executor&quot;: &quot;Run&quot;,
+    &quot;Python.rianfall_intensity_dwd_classification.executor&quot;: &quot;Run&quot;,
+    &quot;Python.six_scenarios.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tocsv.executor&quot;: &quot;Run&quot;,
+    &quot;Python.utils.executor&quot;: &quot;Run&quot;,
+    &quot;Python.validation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.variables.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindowProblems.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;Tab-separated (TSV)_id&quot;,
+    &quot;database.data.extractors.current.id&quot;: &quot;Tab-separated (TSV)_id&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/paulgraefe/PycharmProjects/scientificProject/bayesian_network/InterferenceData&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/bayesian_network/InterferenceData" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bayesian_network" />
       <recent name="$PROJECT_DIR$/bayesian_network/InterferenceData" />
       <recent name="$PROJECT_DIR$/data-processing" />
-      <recent name="$PROJECT_DIR$/bayesian_network" />
       <recent name="$PROJECT_DIR$/data/open-meteo-data/hourly" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
@@ -120,14 +123,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.bn" />
-        <item itemvalue="Python.bn" />
-        <item itemvalue="Python.bn" />
-        <item itemvalue="Python.bn" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -159,6 +154,9 @@
       <workItem from="1737619705376" duration="224000" />
       <workItem from="1737704837807" duration="403000" />
       <workItem from="1737924714739" duration="96000" />
+      <workItem from="1740077028528" duration="700000" />
+      <workItem from="1740835994598" duration="20000" />
+      <workItem from="1756401960074" duration="2995000" />
     </task>
     <servers />
   </component>

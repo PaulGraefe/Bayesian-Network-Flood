@@ -6,7 +6,7 @@ from pgmpy.factors.discrete import TabularCPD
 import numpy as np
 
 
-class ExtendedBayesianNetwork(BayesianNetwork):
+class DiscreteBayesianNetwork(BayesianNetwork):
     """Extended class for Bayesian Models, which allows to simulate data from the model with Weighted Likelihood."""
 
     def simulate_by_weighted_likelihood(
