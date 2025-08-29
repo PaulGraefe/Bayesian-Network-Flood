@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 from pgmpy.inference import VariableElimination
 
-from utils import get_exact_inference_one_state
+from utils import get_exact_inference_one_state, perform_sensitivity_analysis
 from bn import build_bn
 from variables import *
 import pandas as pd
@@ -16,9 +16,13 @@ import seaborn as sns
 # ----------------------------------
 # Titel & Einführung
 # ----------------------------------
-st.set_page_config(page_title="Flutrisiko Dashboard", layout="wide")
+# ---- Seite und Titel ----
+st.set_page_config(
+    page_title="🌊 Flutrisiko-Dashboard",
+    layout="centered",
+    initial_sidebar_state="auto"
+)
 
-st.title("🌧️ Flutrisiko für landwirtschaftliche Flächen – Bayesian Network Dashboard")
 st.markdown("""
 Dieses Dashboard visualisiert die Bewertung von Flutrisiken landwirtschaftlicher Flächen auf Basis
 eines Bayesschen Netzes (BN) kombiniert mit GIS-Analysen.
@@ -148,7 +152,6 @@ if st.button("Flutrisiko berechnen"):
     # Ergebnisse speichern
     result_df = pd.DataFrame(results)
 
-    st.subheader("📊 Verteilung der Flutrisiken der Flurstücke")
 
     # Stil setzen
     sns.set(style="whitegrid")  # weißer Hintergrund, feines Grid
@@ -174,14 +177,48 @@ if st.button("Flutrisiko berechnen"):
         ax=ax
     )
 
-    # Achsentitel & Plottitel
-    ax.set_xlabel("Flutrisiko-Wahrscheinlichkeit (Yes)")
-    ax.set_ylabel("Anzahl Flurstücke")
-    ax.set_title("Verteilung des Flutrisikos über alle Flurstücke")
+    # ---- Histogramm Flutrisiko ----
+    st.subheader("📊 Verteilung der Flutrisiken")
+    fig, ax = plt.subplots(figsize=(4, 4))  # hochkant, kompakt
+    sns.histplot(
+        result_df['FLOOD_RISK_Yes_Probability'],
+        bins=20,
+        color="royalblue",
+        edgecolor="black",
+        linewidth=0.7,
+        alpha=0.85,
+        ax=ax
+    )
+    ax.set_xlabel("Flutrisiko-Wahrscheinlichkeit (Yes)", fontsize=10)
+    ax.set_ylabel("Anzahl Flurstücke", fontsize=10)
+    ax.set_title("Verteilung des Flutrisikos", fontsize=12)
+    ax.tick_params(axis='both', which='major', labelsize=9)
+    ax.grid(True, linestyle="--", alpha=0.25)
 
-    # Optional: feines Raster
-    ax.grid(True, linestyle="--", alpha=0.5)
+    st.pyplot(fig, bbox_inches='tight')  # nutzt den verfügbaren Platz effizient
 
+    st.subheader("🔍 Sensitivitätsanalyse")
+    variables_to_check = ['RAINFALL_AMOUNT', 'RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE', 'ELEVATION']
+    sensitivity_df = perform_sensitivity_analysis(
+        target_variable="FLOOD_RISK",
+        inference=infer,
+        evidence=fixed_values.copy(),
+        variables_to_analyze=variables_to_check
+    )
+
+    # Aggregiere nach Variable, z.B. Differenz zwischen Max und Min Wahrscheinlichkeit von 'Yes'
+    sensitivity_summary = sensitivity_df.groupby("Variable").apply(
+        lambda df: df["Target_Probabilities"].apply(lambda x: x[0]).max() - df["Target_Probabilities"].apply(
+            lambda x: x[0]).min()
+    ).reset_index()
+    sensitivity_summary.columns = ["Variable", "Sensitivity"]
+
+    # Barplot
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.barplot(data=sensitivity_summary, x="Sensitivity", y="Variable", palette="viridis", ax=ax)
+    ax.set_xlabel("Delta FLOOD_RISK (Yes)")
+    ax.set_ylabel("Variable")
+    ax.set_title("Sensitivität der Variablen auf FLOOD_RISK")
     st.pyplot(fig)
 
 
