@@ -290,9 +290,9 @@ components_to_analyze = ["HAZARD", "VULNERABILITY", "EXPOSURE", "RIVER_EXPOSURE"
 
 target_variable = 'FLOOD_RISK'
 
-sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, {}, variables_to_analyze + components_to_analyze, model)
+sensitivity_results = perform_sensitivity_analysis(target_variable, exact_infer, {},  components_to_analyze, model)
 print(sensitivity_results)
-plot_sensitivity_results(sensitivity_results)
+#plot_sensitivity_results(sensitivity_results)
 
 variable_pair = ("ELEVATION", "SLOPE")
 
