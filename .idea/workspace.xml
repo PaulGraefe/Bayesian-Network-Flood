@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2bc13a9-4c3c-4817-9eb1-0e0a3b92c6d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bayesian_network/dashboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bayesian_network/InferenceData/output_with_risk.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/InferenceData/output_with_risk.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bayesian_network/bn.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/bn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bayesian_network/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bayesian_network/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -198,27 +198,34 @@ if st.button("Flutrisiko berechnen"):
     st.pyplot(fig, bbox_inches='tight')  # nutzt den verfügbaren Platz effizient
 
     st.subheader("🔍 Sensitivitätsanalyse")
-    variables_to_check = ['RAINFALL_AMOUNT', 'RAINFALL_INTENSITY', 'TEMPERATURE', 'SOIL_MOISTURE', 'ELEVATION']
-    sensitivity_df = perform_sensitivity_analysis(
-        target_variable="FLOOD_RISK",
-        inference=infer,
-        evidence=fixed_values.copy(),
-        variables_to_analyze=variables_to_check
+
+    # Variablen, deren Einfluss auf FLOOD_RISK untersucht werden soll
+    components_to_analyze = [
+        "HAZARD", "VULNERABILITY", "EXPOSURE", "RIVER_EXPOSURE",
+        "RUNOFF_COEFFICIENT", "RAINFALL_AMOUNT"
+    ]
+
+    target_variable = 'FLOOD_RISK'
+
+    # Sensitivitätsanalyse ausführen
+    # (Leere Evidenz {} bedeutet, dass alle Variablen unvoreingestellt sind)
+    sensitivity_results = perform_sensitivity_analysis(
+        target_variable, infer, {}, components_to_analyze, model
     )
 
-    # Aggregiere nach Variable, z.B. Differenz zwischen Max und Min Wahrscheinlichkeit von 'Yes'
-    sensitivity_summary = sensitivity_df.groupby("Variable").apply(
-        lambda df: df["Target_Probabilities"].apply(lambda x: x[0]).max() - df["Target_Probabilities"].apply(
-            lambda x: x[0]).min()
+    # Aggregiere nach Variable: Differenz zwischen Max und Min Wahrscheinlichkeit von 'Yes'
+    sensitivity_summary = sensitivity_results.groupby("Variable").apply(
+        lambda df: df["Target_Probabilities"].apply(lambda x: x[0]).max() -
+                   df["Target_Probabilities"].apply(lambda x: x[0]).min()
     ).reset_index()
     sensitivity_summary.columns = ["Variable", "Sensitivity"]
 
-    # Barplot
-    fig, ax = plt.subplots(figsize=(6, 4))
+    # ---- Plot ----
+    fig, ax = plt.subplots(figsize=(6, 4))  # kompakt und hochkant
     sns.barplot(data=sensitivity_summary, x="Sensitivity", y="Variable", palette="viridis", ax=ax)
     ax.set_xlabel("Delta FLOOD_RISK (Yes)")
     ax.set_ylabel("Variable")
     ax.set_title("Sensitivität der Variablen auf FLOOD_RISK")
+    ax.grid(True, linestyle="--", alpha=0.3)
+
     st.pyplot(fig)
-
-

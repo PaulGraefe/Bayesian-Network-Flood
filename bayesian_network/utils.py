@@ -37,16 +37,29 @@ def calculate_flood_risk(row, target_variable, exact_infer):
     return result
 
 
-def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze):
+def perform_sensitivity_analysis(target_variable, inference, evidence, variables_to_analyze, model):
     results = []
+
+    # Funktion, um die Zustände einer Variablen aus den CPDs zu extrahieren
+    def get_variable_states(variable):
+        cpd = model.get_cpds(variable)
+        if cpd is None:
+            raise ValueError(f"Keine CPD für die Variable {variable} im Modell gefunden.")
+        return cpd.state_names[variable]
 
     # Iteriere über jede Variable, die analysiert werden soll
     for variable in variables_to_analyze:
         original_value = evidence.get(variable)
-        print(f"Sensitivitätsanalyse für Variable: {variable}")
+
+        # Hole die möglichen Zustände der Variable
+        try:
+            states = get_variable_states(variable)
+        except ValueError as e:
+            print(str(e))
+            continue
 
         # Iteriere über alle möglichen Werte der Variable
-        for state in inference.state_names[variable]:
+        for state in states:
             # Setze den neuen Zustand
             evidence[variable] = state
 
@@ -57,7 +70,7 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
             results.append({
                 "Variable": variable,
                 "State": state,
-                "Target_Probabilities": prob_dist[target_variable].values
+                "Target_Probabilities": prob_dist.values  # Korrekte Methode für Werte
             })
 
         # Ursprünglichen Zustand wiederherstellen
@@ -66,7 +79,8 @@ def perform_sensitivity_analysis(target_variable, inference, evidence, variables
         else:
             del evidence[variable]
 
-        return pd.DataFrame(results)
+    # Ergebnisse als DataFrame zurückgeben
+    return pd.DataFrame(results)
 
 
 def __get_state_names(variable: str, state_names_dictionary: Dict[str, List[str]],
