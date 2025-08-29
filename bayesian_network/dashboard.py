@@ -148,12 +148,40 @@ if st.button("Flutrisiko berechnen"):
     # Ergebnisse speichern
     result_df = pd.DataFrame(results)
 
-    # Histogramm
-    st.subheader("📊 Verteilung der Flutrisiken")
-    fig, ax = plt.subplots(figsize=(10, 5))
-    sns.histplot(result_df['FLOOD_RISK_Yes_Probability'], bins=20, kde=True, ax=ax)
+    st.subheader("📊 Verteilung der Flutrisiken der Flurstücke")
+
+    # Stil setzen
+    sns.set(style="whitegrid")  # weißer Hintergrund, feines Grid
+    plt.rcParams.update({
+        "font.size": 14,
+        "figure.figsize": (10, 6),
+        "axes.labelsize": 14,
+        "axes.titlesize": 16,
+        "xtick.labelsize": 12,
+        "ytick.labelsize": 12
+    })
+
+    fig, ax = plt.subplots()
+
+    # Nur Histogramm ohne KDE
+    sns.histplot(
+        result_df['FLOOD_RISK_Yes_Probability'],
+        bins=20,
+        color="royalblue",
+        edgecolor="black",
+        linewidth=0.8,
+        alpha=0.8,
+        ax=ax
+    )
+
+    # Achsentitel & Plottitel
     ax.set_xlabel("Flutrisiko-Wahrscheinlichkeit (Yes)")
     ax.set_ylabel("Anzahl Flurstücke")
+    ax.set_title("Verteilung des Flutrisikos über alle Flurstücke")
+
+    # Optional: feines Raster
+    ax.grid(True, linestyle="--", alpha=0.5)
+
     st.pyplot(fig)
 
 
