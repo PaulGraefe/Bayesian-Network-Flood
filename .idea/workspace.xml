@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e2bc13a9-4c3c-4817-9eb1-0e0a3b92c6d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bayesian_network/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayesian_network/dashboard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +156,7 @@
       <workItem from="1740835994598" duration="20000" />
       <workItem from="1756401960074" duration="2995000" />
       <workItem from="1757929112718" duration="80000" />
-      <workItem from="1757930160722" duration="644000" />
+      <workItem from="1757930160722" duration="1213000" />
     </task>
     <servers />
   </component>

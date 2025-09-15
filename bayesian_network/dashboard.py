@@ -1,3 +1,5 @@
+import os
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
@@ -114,12 +116,13 @@ fixed_values = {
 st.title("🌊 Flutrisiko-Dashboard")
 st.markdown("Berechnung des Flutrisikos für viele Flurstücke auf Basis einer CSV-Datei.")
 
-# 3. Pfade im Projektbaum (statt Upload)
-input_file = "bayesian_network/InferenceData/flst_final.csv"
-output_file = "bayesian_network/InferenceData/output_with_risk.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Hier den Pfad zusammenbauen
+input_file = os.path.join(BASE_DIR, "InferenceData", "flst_final.csv")
+output_file = os.path.join(BASE_DIR, "InferenceData", "output_with_risk.csv")
 
-# CSV laden
+# Laden der CSV
 df = pd.read_csv(input_file, delimiter=';')
 st.write("✅ Datei erfolgreich geladen. Vorschau:")
 st.dataframe(df.head())
